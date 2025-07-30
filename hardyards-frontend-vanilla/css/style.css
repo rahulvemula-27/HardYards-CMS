@@ -235,7 +235,7 @@ html {
 .mobile-menu {
   position: fixed;
   top: 0;
-  right: -320px;
+  right: 0;
   width: 280px;
   height: 100vh;
   background: #fff;
@@ -245,12 +245,19 @@ html {
   flex-direction: column;
   gap: 0.5rem;
   z-index: 1000;
-  transition: right 0.3s ease-out;
   overflow-y: auto;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  transform: translateX(100%) !important;
+  transition: visibility 0.3s, opacity 0.3s, transform 0.3s;
+  pointer-events: none;
 }
 
 .mobile-menu.active {
-  right: 0;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+  pointer-events: auto;
 }
 
 /* Mobile menu sports toggle */

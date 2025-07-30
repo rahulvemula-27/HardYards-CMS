@@ -6,6 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Always show menu toggle button on all devices
   menuToggle.style.display = "flex";
+  
+  // Ensure mobile menu is hidden by default
+  if (mobileMenu) {
+    mobileMenu.classList.remove("active");
+  }
 
   // Toggle mobile menu
   const toggleMenu = (e) => {

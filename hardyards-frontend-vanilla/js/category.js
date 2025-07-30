@@ -205,7 +205,7 @@ async function loadCategoryArticles(subcategory = null) {
       <div class="error-message">
         <p>Error loading articles. Please try again later.</p>
         <a href="index.html">Return to homepage</a>
-      </div>
+        </div>
     `;
   }
 }
