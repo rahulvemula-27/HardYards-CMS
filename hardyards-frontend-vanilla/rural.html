@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HardYards - Rural</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+  <nav class="navbar">
+  <a href="index.html" class="logo"><span class="hard">Hard</span><span class="yards">Yards</span></a>
+  <div class="nav-links">
+  <a href="sports.html">SPORTS</a>
+  <a href="urban.html">URBAN</a>
+  <a href="rural.html">RURAL</a>
+  <a href="life.html">LIFE</a>
+</div>
+  <div class="nav-right">
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+      <span class="hamburger"></span>
+    </button>
+  </div>
+</nav>
+  
+  <!-- Replace mobile-menu div in all HTML files with this: -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="sports.html" class="sports-toggle">SPORTS <span class="dropdown-arrow">▼</span></a>
+  <div class="sports-dropdown-content">
+    <a href="sports.html?sub=Athletics">Athletics</a>
+    <a href="sports.html?sub=Badminton">Badminton</a>
+    <a href="sports.html?sub=Basketball">Basketball</a>
+    <a href="sports.html?sub=Cricket">Cricket</a>
+    <a href="sports.html?sub=Cycling">Cycling</a>
+    <a href="sports.html?sub=Football">Football</a>
+    <a href="sports.html?sub=Golf">Golf</a>
+    <a href="sports.html?sub=Hockey">Hockey</a>
+    <a href="sports.html?sub=Motorsport">Motorsport</a>
+    <a href="sports.html?sub=Tennis">Tennis</a>
+  </div>
+  <a href="urban.html">URBAN</a>
+  <a href="rural.html">RURAL</a>
+  <a href="life.html">LIFE</a>
+</div>
+  
+  <main class="container">
+    <h1 class="hero-title left">RURAL</h1>
+    <div id="category-articles"></div>
+  </main>
+  
+  <footer>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="sports.html">Sports</a>
+      <a href="urban.html">Urban</a>
+      <a href="rural.html">Rural</a>
+      <a href="life.html">Life</a>
+    </div>
+    <p>&copy; 2025 HardYards. All rights reserved.</p>
+  </footer>
+  
+  <script src="js/main.js"></script>
+  <script src="js/category.js"></script>
+  <script src="js/rural.js"></script>
+</body>
+</html>

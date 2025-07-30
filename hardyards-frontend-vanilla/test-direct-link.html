@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direct Link Test</title>
+</head>
+<body>
+    <h1>Direct Link Test</h1>
+    
+    <p>Click these links to test if the server handles query parameters correctly:</p>
+    
+    <ul>
+        <li><a href="post.html#portrush-the-open-preview">Test with actual slug: portrush-the-open-preview</a></li>
+        <li><a href="post.html#test-slug">Test with dummy slug: test-slug</a></li>
+        <li><a href="post.html">Test without slug</a></li>
+    </ul>
+    
+    <p>If the links work correctly, you should see the article content or an error message on the post page.</p>
+    <p>If you see "Article not found" on all links, the server is not handling query parameters correctly.</p>
+    
+    <script>
+        // Also test JavaScript navigation
+        function testJS() {
+            window.location.href = 'post.html#portrush-the-open-preview';
+        }
+    </script>
+    
+    <button onclick="testJS()">Test JavaScript Navigation</button>
+</body>
+</html> 

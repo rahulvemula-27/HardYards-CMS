@@ -1,0 +1,190 @@
+document.addEventListener("DOMContentLoaded", function() {
+  // Get slug from hash instead of query parameters
+  const slug = window.location.hash.substring(1); // Remove the # symbol
+  
+  console.log('Post.js - Current URL:', window.location.href);
+  console.log('Post.js - Slug from hash:', slug);
+  
+  if (slug) {
+    loadArticle(slug);
+  } else {
+    console.log('Post.js - No slug found, showing error');
+    document.getElementById("article-container").innerHTML = `
+      <div class="error-message">
+        <p>Article not found</p>
+        <a href="index.html" class="back-button">Return to Homepage</a>
+      </div>
+    `;
+  }
+});
+
+async function loadArticle(slug) {
+  console.log('loadArticle called with slug:', slug);
+  console.log('loadArticle slug type:', typeof slug);
+  console.log('loadArticle slug length:', slug ? slug.length : 0);
+  
+  // Decode the slug in case it's URL encoded
+  const decodedSlug = decodeURIComponent(slug);
+  console.log('Decoded slug:', decodedSlug);
+  
+  const container = document.getElementById("article-container");
+  container.innerHTML = `
+    <div class="article-loading">
+      <div class="spinner"></div>
+      <p>Loading article...</p>
+    </div>
+  `;
+
+  try {
+    // Try to find the article by slug first
+    let query = `*[_type == "post" && slug.current == "${decodedSlug}"][0]{
+      title,
+      slug,
+      mainImage{asset->{url, altText}},
+      publishedAt,
+      categories[]->{title},
+      excerpt,
+      body,
+      author->{name}
+    }`;
+    
+    console.log('Post.js - First attempt query:', query);
+    
+    const url = `https://cfblwn37.api.sanity.io/v2023-07-14/data/query/production?query=${encodeURIComponent(query)}`;
+    console.log('Post.js - Fetching from URL:', url);
+    
+    let response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    let { result: article } = await response.json();
+    
+    // If not found by slug, try to find by title (fallback)
+    if (!article) {
+      console.log('Article not found by slug, trying to find by title...');
+      query = `*[_type == "post" && title == "${decodedSlug}"][0]{
+        title,
+        slug,
+        mainImage{asset->{url, altText}},
+        publishedAt,
+        categories[]->{title},
+        excerpt,
+        body,
+        author->{name}
+      }`;
+      
+      console.log('Post.js - Fallback query by title:', query);
+      
+      const fallbackUrl = `https://cfblwn37.api.sanity.io/v2023-07-14/data/query/production?query=${encodeURIComponent(query)}`;
+      response = await fetch(fallbackUrl);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const fallbackResult = await response.json();
+      article = fallbackResult.result;
+    }
+
+    if (!article) {
+      throw new Error("Article not found");
+    }
+
+    container.innerHTML = `
+      <article class="article-detail">
+        <div class="article-header">
+          <div class="back-navigation">
+            <a href="javascript:history.back()" class="back-button">
+              ← Back to Previous Page
+            </a>
+          </div>
+          <h1>${article.title}</h1>
+          ${article.mainImage ? `
+            <img src="${article.mainImage.asset.url}" 
+                 alt="${article.mainImage.asset.altText || article.title}" 
+                 class="article-image">
+          ` : ''}
+          <div class="article-meta">
+            <time datetime="${article.publishedAt}">
+              ${new Date(article.publishedAt).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </time>
+            <span class="article-author">• ${article.author?.name || 'HardYards Team'}</span>
+          </div>
+        </div>
+        <div class="article-content">
+          ${article.excerpt ? `<p class="article-excerpt">${article.excerpt}</p>` : ''}
+          ${renderArticleContent(article.body)}
+        </div>
+      </article>
+    `;
+  } catch (error) {
+    console.error("Error loading article:", error);
+    container.innerHTML = `
+      <div class="error-message">
+        <p>Error loading article: ${error.message}</p>
+        <a href="index.html" class="back-button">Return to Homepage</a>
+      </div>
+    `;
+  }
+}
+
+function renderArticleContent(body) {
+  if (!body || !Array.isArray(body)) return '';
+  
+  return body.map(block => {
+    if (block._type !== 'block') return '';
+    
+    // Handle different text styles within the block
+    const text = block.children.map(child => {
+      let textContent = child.text || '';
+      
+      // Apply marks (bold, italic, etc.)
+      if (child.marks && child.marks.length > 0) {
+        child.marks.forEach(mark => {
+          switch (mark) {
+            case 'strong':
+            case 'bold':
+              textContent = `<strong>${textContent}</strong>`;
+              break;
+            case 'em':
+            case 'italic':
+              textContent = `<em>${textContent}</em>`;
+              break;
+            case 'underline':
+              textContent = `<u>${textContent}</u>`;
+              break;
+            case 'code':
+              textContent = `<code>${textContent}</code>`;
+              break;
+          }
+        });
+      }
+      
+      return textContent;
+    }).join('');
+    
+    // Handle different block styles
+    switch (block.style) {
+      case 'h1':
+        return `<h1>${text}</h1>`;
+      case 'h2':
+        return `<h2>${text}</h2>`;
+      case 'h3':
+        return `<h3>${text}</h3>`;
+      case 'h4':
+        return `<h4>${text}</h4>`;
+      case 'blockquote':
+        return `<blockquote>${text}</blockquote>`;
+      case 'normal':
+      default:
+        // Only create paragraph if there's actual text content
+        return text.trim() ? `<p>${text}</p>` : '';
+    }
+  }).join('');
+}

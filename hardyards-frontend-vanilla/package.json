@@ -1,0 +1,17 @@
+{
+  "name": "hardyards-frontend",
+  "version": "1.0.0",
+  "description": "HardYards Blogging Website Frontend",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000 --open=/sports.html",
+    "start": "live-server --port=3000",
+    "serve": "live-server --port=3000"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "keywords": ["blog", "sports", "vanilla-js"],
+  "author": "HardYards Team",
+  "license": "MIT"
+} 

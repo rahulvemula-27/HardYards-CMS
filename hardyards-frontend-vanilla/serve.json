@@ -1,0 +1,20 @@
+{
+  "public": ".",
+  "rewrites": [
+    {
+      "source": "/post",
+      "destination": "/post.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "**/*.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ]
+} 
