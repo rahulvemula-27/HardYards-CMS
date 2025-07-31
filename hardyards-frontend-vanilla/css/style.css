@@ -529,9 +529,6 @@ html {
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: transform 0.2s;
   border: none;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
 }
 
 .article-card:hover {
@@ -548,9 +545,6 @@ html {
   padding: 1.5rem;
   border: none;
   background: none;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
 }
 
 .article-category {
@@ -583,7 +577,6 @@ html {
 .article-date {
   color: #666;
   font-size: 0.85rem;
-  margin-top: auto;
 }
 
 /* ========== ARTICLE META STYLES ========== */
