@@ -26,16 +26,9 @@ body {
   color: var(--main-blue);
   font-size: 1.1rem;
   line-height: 1.6;
-  min-height: 100vh !important;
-  position: relative !important;
-}
-
-/* Wrapper to ensure proper layout */
-body::after {
-  content: '';
-  display: block;
-  height: 200px;
-  clear: both;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Sentinel for all headings */
@@ -397,9 +390,7 @@ html {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  min-height: 0 !important;
-  position: relative !important;
-  margin-bottom: 200px !important;
+  flex: 1;
 }
 
 .hero-title {
@@ -740,19 +731,12 @@ html {
 
 /* Footer */
 footer {
-  background: var(--logo-yards) !important;
-  color: white !important;
-  padding: 3rem 0 !important;
-  text-align: center !important;
-  width: 100% !important;
-  position: fixed !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  z-index: 999 !important;
-  height: 200px !important;
-  box-sizing: border-box !important;
-  margin-top: 200px !important;
+  background: var(--logo-yards);
+  color: white;
+  padding: 2rem 0;
+  text-align: center;
+  width: 100%;
+  margin-top: auto;
 }
 
 .footer-links {
@@ -877,7 +861,6 @@ footer {
   margin: 0 auto;
   padding: 20px;
   min-height: 60vh;
-  margin-bottom: 200px !important;
 }
 
 .article-header {
