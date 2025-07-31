@@ -726,11 +726,11 @@ footer {
   color: white;
   padding: 3rem 0;
   text-align: center;
-  margin-top: 3rem;
-  position: relative;
+  position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
-  z-index: 0;
+  z-index: 1000;
 }
 
 .footer-links {
@@ -836,7 +836,7 @@ footer {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  min-height: calc(100vh - 400px);
+  padding-bottom: 200px;
   position: relative;
   z-index: 1;
 }
