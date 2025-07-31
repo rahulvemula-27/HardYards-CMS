@@ -531,6 +531,7 @@ html {
   border: none;
   display: flex;
   flex-direction: column;
+  height: 400px;
 }
 
 .article-card:hover {
@@ -539,17 +540,22 @@ html {
 
 .article-image {
   width: 100%;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
   display: block;
   margin: 0;
   padding: 0;
+  border-radius: 8px 8px 0 0;
 }
 
 .article-content {
   padding: 1.5rem;
   border: none;
   background: none;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .article-category {
