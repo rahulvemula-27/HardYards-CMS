@@ -26,6 +26,9 @@ body {
   color: var(--main-blue);
   font-size: 1.1rem;
   line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Sentinel for all headings */
@@ -387,6 +390,8 @@ html {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  flex: 1;
+  min-height: 0;
 }
 
 .hero-title {
@@ -634,6 +639,11 @@ html {
   text-align: center;
   padding: 2rem;
   color: var(--headline-red);
+  min-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .error-message a {
@@ -726,8 +736,9 @@ footer {
   color: white;
   padding: 3rem 0;
   text-align: center;
-  margin-top: 3rem;
+  margin-top: auto;
   width: 100%;
+  flex-shrink: 0;
 }
 
 .footer-links {
@@ -758,6 +769,15 @@ footer {
     margin-left: 0;
     width: 100%;
     min-width: unset;
+  }
+  
+  /* Ensure footer stays at bottom on smaller screens */
+  body {
+    min-height: 100vh;
+  }
+  
+  .container {
+    flex: 1;
   }
 }
 
@@ -835,6 +855,14 @@ footer {
   padding: 20px;
   position: relative;
   z-index: 1;
+  min-height: 60vh;
+}
+
+#article-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 60vh;
 }
 
 .article-header {
