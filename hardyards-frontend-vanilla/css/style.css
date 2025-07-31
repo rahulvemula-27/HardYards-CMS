@@ -388,7 +388,6 @@ html {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  margin-bottom: 150px;
 }
 
 .hero-title {
@@ -734,8 +733,13 @@ footer {
   padding: 2rem 0;
   text-align: center;
   width: 100%;
-  position: relative;
-  bottom: 0;
+  clear: both;
+  position: static !important;
+  top: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  z-index: auto !important;
 }
 
 .footer-links {
@@ -860,7 +864,6 @@ footer {
   margin: 0 auto;
   padding: 20px;
   min-height: 60vh;
-  margin-bottom: 150px;
 }
 
 .article-header {
