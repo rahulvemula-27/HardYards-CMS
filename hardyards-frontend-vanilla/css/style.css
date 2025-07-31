@@ -26,9 +26,10 @@ body {
   color: var(--main-blue);
   font-size: 1.1rem;
   line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
 }
 
 /* Sentinel for all headings */
@@ -390,8 +391,9 @@ html {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  flex: 1;
-  min-height: 0;
+  flex: 1 !important;
+  min-height: 0 !important;
+  position: relative !important;
 }
 
 .hero-title {
@@ -732,13 +734,17 @@ html {
 
 /* Footer */
 footer {
-  background: var(--logo-yards);
-  color: white;
-  padding: 3rem 0;
-  text-align: center;
-  margin-top: auto;
-  width: 100%;
-  flex-shrink: 0;
+  background: var(--logo-yards) !important;
+  color: white !important;
+  padding: 3rem 0 !important;
+  text-align: center !important;
+  margin-top: auto !important;
+  width: 100% !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
 }
 
 .footer-links {
