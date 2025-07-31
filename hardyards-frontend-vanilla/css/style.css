@@ -531,7 +531,6 @@ html {
   border: none;
   display: flex;
   flex-direction: column;
-  width: 600px;
   height: 500px;
 }
 
@@ -540,7 +539,7 @@ html {
 }
 
 .article-image {
-  width: 600px;
+  width: 100%;
   height: 400px;
   object-fit: cover;
   display: block;
