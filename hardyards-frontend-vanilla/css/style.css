@@ -279,8 +279,16 @@ html {
   color: var(--headline-red);
 }
 
+/* Desktop dropdown arrow - keep original size */
+.nav-links .sports-dropdown .dropdown-arrow {
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+/* Mobile dropdown arrow - make it more visible */
 .mobile-menu .sports-toggle .dropdown-arrow {
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin-left: 0.5rem;
   transition: transform 0.3s ease;
   color: var(--logo-hard);
@@ -806,6 +814,23 @@ footer {
   .mobile-menu {
     width: 85%;
     padding: 5rem 1rem 1rem;
+  }
+  
+  /* Mobile-specific dropdown arrow styles */
+  .mobile-menu .sports-toggle .dropdown-arrow {
+    font-size: 1.4rem;
+    margin-left: 0.5rem;
+    color: var(--logo-hard);
+    font-weight: bold;
+    display: inline-block;
+  }
+  
+  /* Ensure mobile menu links are fully visible */
+  .mobile-menu a {
+    font-size: 1.1rem;
+    padding: 0.8rem 1rem;
+    white-space: nowrap;
+    overflow: visible;
   }
 }
 
