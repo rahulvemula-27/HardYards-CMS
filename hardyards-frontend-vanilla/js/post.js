@@ -36,7 +36,56 @@ async function loadArticle(slug) {
   `;
 
   try {
-    // Try to find the article by slug first
+    // First, fetch all articles ordered by publishedAt desc to get navigation data
+    const allArticlesQuery = `*[_type == "post"] | order(publishedAt desc) {
+      _id,
+      title,
+      slug,
+      publishedAt
+    }`;
+    
+    const allArticlesUrl = `https://cfblwn37.api.sanity.io/v2023-07-14/data/query/production?query=${encodeURIComponent(allArticlesQuery)}`;
+    const allArticlesResponse = await fetch(allArticlesUrl);
+    
+    if (!allArticlesResponse.ok) {
+      throw new Error(`HTTP error! status: ${allArticlesResponse.status}`);
+    }
+    
+    const allArticlesData = await allArticlesResponse.json();
+    const allArticles = allArticlesData.result || [];
+    
+    // Find current article position
+    let currentArticleIndex = -1;
+    let currentArticle = null;
+    
+    for (let i = 0; i < allArticles.length; i++) {
+      if (allArticles[i].slug?.current === decodedSlug) {
+        currentArticleIndex = i;
+        currentArticle = allArticles[i];
+        break;
+      }
+    }
+    
+    // If not found by slug, try by title
+    if (currentArticleIndex === -1) {
+      for (let i = 0; i < allArticles.length; i++) {
+        if (allArticles[i].title === decodedSlug) {
+          currentArticleIndex = i;
+          currentArticle = allArticles[i];
+          break;
+        }
+      }
+    }
+    
+    if (currentArticleIndex === -1) {
+      throw new Error("Article not found");
+    }
+    
+    // Get previous and next articles
+    const previousArticle = currentArticleIndex < allArticles.length - 1 ? allArticles[currentArticleIndex + 1] : null;
+    const nextArticle = currentArticleIndex > 0 ? allArticles[currentArticleIndex - 1] : null;
+    
+    // Now fetch the full article data for the current article
     let query = `*[_type == "post" && slug.current == "${decodedSlug}"][0]{
       title,
       slug,
@@ -92,6 +141,9 @@ async function loadArticle(slug) {
       throw new Error("Article not found");
     }
 
+    // Create navigation HTML
+    const navigationHTML = createNavigationHTML(previousArticle, nextArticle);
+
     container.innerHTML = `
       <article class="article-detail">
         <div class="article-header">
@@ -121,6 +173,7 @@ async function loadArticle(slug) {
           ${article.excerpt ? `<p class="article-excerpt">${article.excerpt}</p>` : ''}
           ${renderArticleContent(article.body)}
         </div>
+        ${navigationHTML}
       </article>
     `;
   } catch (error) {
@@ -132,6 +185,41 @@ async function loadArticle(slug) {
       </div>
     `;
   }
+}
+
+function createNavigationHTML(previousArticle, nextArticle) {
+  let navigationHTML = '<div class="article-navigation">';
+  
+  if (previousArticle) {
+    navigationHTML += `
+      <a href="post.html#${previousArticle.slug?.current || ''}" class="nav-button prev-button">
+        <span class="nav-arrow">←</span>
+        <div class="nav-content">
+          <span class="nav-label">Previous Article</span>
+          <span class="nav-title">${previousArticle.title}</span>
+        </div>
+      </a>
+    `;
+  } else {
+    navigationHTML += '<div class="nav-button prev-button disabled"></div>';
+  }
+  
+  if (nextArticle) {
+    navigationHTML += `
+      <a href="post.html#${nextArticle.slug?.current || ''}" class="nav-button next-button">
+        <div class="nav-content">
+          <span class="nav-label">Next Article</span>
+          <span class="nav-title">${nextArticle.title}</span>
+        </div>
+        <span class="nav-arrow">→</span>
+      </a>
+    `;
+  } else {
+    navigationHTML += '<div class="nav-button next-button disabled"></div>';
+  }
+  
+  navigationHTML += '</div>';
+  return navigationHTML;
 }
 
 function renderArticleContent(body) {
