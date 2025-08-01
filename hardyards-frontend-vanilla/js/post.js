@@ -190,9 +190,10 @@ async function loadArticle(slug) {
 function createNavigationHTML(previousArticle, nextArticle) {
   let navigationHTML = '<div class="article-navigation">';
   
-  if (previousArticle) {
+  if (previousArticle && previousArticle.slug?.current) {
+    const prevSlug = encodeURIComponent(previousArticle.slug.current);
     navigationHTML += `
-      <a href="post.html#${previousArticle.slug?.current || ''}" class="nav-button prev-button">
+      <a href="post.html#${prevSlug}" class="nav-button prev-button">
         <span class="nav-arrow">←</span>
         <div class="nav-content">
           <span class="nav-label">Previous Article</span>
@@ -200,13 +201,12 @@ function createNavigationHTML(previousArticle, nextArticle) {
         </div>
       </a>
     `;
-  } else {
-    navigationHTML += '<div class="nav-button prev-button disabled"></div>';
   }
   
-  if (nextArticle) {
+  if (nextArticle && nextArticle.slug?.current) {
+    const nextSlug = encodeURIComponent(nextArticle.slug.current);
     navigationHTML += `
-      <a href="post.html#${nextArticle.slug?.current || ''}" class="nav-button next-button">
+      <a href="post.html#${nextSlug}" class="nav-button next-button">
         <div class="nav-content">
           <span class="nav-label">Next Article</span>
           <span class="nav-title">${nextArticle.title}</span>
@@ -214,8 +214,11 @@ function createNavigationHTML(previousArticle, nextArticle) {
         <span class="nav-arrow">→</span>
       </a>
     `;
-  } else {
-    navigationHTML += '<div class="nav-button next-button disabled"></div>';
+  }
+  
+  // Only add the navigation container if there are actual buttons
+  if (navigationHTML === '<div class="article-navigation">') {
+    return ''; // Return empty string if no navigation buttons
   }
   
   navigationHTML += '</div>';

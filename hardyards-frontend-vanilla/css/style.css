@@ -1135,6 +1135,10 @@ footer {
   gap: 1rem;
 }
 
+.article-navigation:only-child {
+  justify-content: center;
+}
+
 .nav-button {
   display: flex;
   align-items: center;
@@ -1154,12 +1158,6 @@ footer {
   border-color: var(--logo-hard);
   box-shadow: 0 4px 12px rgba(3, 107, 64, 0.15);
   transform: translateY(-2px);
-}
-
-.nav-button.disabled {
-  opacity: 0.3;
-  pointer-events: none;
-  background: #f5f5f5;
 }
 
 .prev-button {
