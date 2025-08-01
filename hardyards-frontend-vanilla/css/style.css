@@ -128,7 +128,7 @@ html {
 
 .nav-links {
   display: flex;
-  gap: 2.1rem;
+  gap: 3.15rem;
   font-size: 1.14rem;
   margin: 0 auto;
   padding: 0;
@@ -173,7 +173,36 @@ html {
 
 /* Hide desktop sports dropdown */
 .nav-links .sports-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 1rem;
+  min-width: 200px;
+  z-index: 1000;
   display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-links .sports-dropdown.active {
+  display: flex;
+}
+
+.nav-links .sports-dropdown a {
+  color: var(--main-blue);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-links .sports-dropdown a:hover {
+  background: rgba(3, 107, 64, 0.1);
+  color: var(--logo-hard);
 }
 
 /* ========== MENU TOGGLE STYLES ========== */
@@ -237,7 +266,7 @@ html {
   position: fixed;
   top: 0;
   right: 0;
-  width: 118px;
+  width: 280px;
   height: 100vh;
   background: #fff;
   box-shadow: -5px 0 25px rgba(0,0,0,0.1);
@@ -818,11 +847,13 @@ footer {
   
   /* Mobile-specific dropdown arrow styles */
   .mobile-menu .sports-toggle .dropdown-arrow {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     margin-left: 0.5rem;
     color: var(--logo-hard);
     font-weight: bold;
     display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
   }
   
   /* Ensure mobile menu links are fully visible */
