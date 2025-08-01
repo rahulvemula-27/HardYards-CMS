@@ -84,7 +84,7 @@ html {
 
 /* Cover Story Section */
 .cover-story-section {
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 
 .cover-story-title {
@@ -237,7 +237,7 @@ html {
   position: fixed;
   top: 0;
   right: 0;
-  width: 280px;
+  width: 210px;
   height: 100vh;
   background: #fff;
   box-shadow: -5px 0 25px rgba(0,0,0,0.1);
@@ -403,7 +403,7 @@ html {
 .featured-container {
   display: flex;
   gap: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1.8rem;
 }
 
 #featured-article {
