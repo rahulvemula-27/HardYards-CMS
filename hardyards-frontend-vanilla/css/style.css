@@ -649,8 +649,8 @@ html {
 .section-title {
   font-family: 'Sentinel-Semibold', serif;
   font-size: 2rem;
-  color: var(--main-blue);
-  margin: 1.8rem 0 2rem 0;
+  color: #036b40;
+  margin: 1.66rem 0 2rem 0;
   text-align: center;
   font-weight: normal;
 }
