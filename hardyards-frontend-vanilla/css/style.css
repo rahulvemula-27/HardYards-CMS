@@ -237,7 +237,7 @@ html {
   position: fixed;
   top: 0;
   right: 0;
-  width: 210px;
+  width: 182px;
   height: 100vh;
   background: #fff;
   box-shadow: -5px 0 25px rgba(0,0,0,0.1);
@@ -386,7 +386,7 @@ html {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .hero-title {
@@ -403,7 +403,7 @@ html {
 .featured-container {
   display: flex;
   gap: 2rem;
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.08rem;
 }
 
 #featured-article {
