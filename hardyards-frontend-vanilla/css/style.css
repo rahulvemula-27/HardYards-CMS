@@ -91,7 +91,7 @@ html {
   font-family: 'Sentinel-Semibold', serif;
   font-size: 3rem;
   color: var(--headline-red);
-  margin-bottom: 2rem;
+  margin: 1rem 0 2rem 0;
   text-align: left;
   font-weight: normal;
   text-transform: uppercase;
@@ -650,7 +650,7 @@ html {
   font-family: 'Sentinel-Semibold', serif;
   font-size: 2rem;
   color: var(--main-blue);
-  margin: 3rem 0 2rem 0;
+  margin: 1.8rem 0 2rem 0;
   text-align: center;
   font-weight: normal;
 }
