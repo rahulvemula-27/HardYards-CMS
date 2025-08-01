@@ -16,6 +16,15 @@ document.addEventListener("DOMContentLoaded", function() {
       </div>
     `;
   }
+  
+  // Listen for hash changes to reload article when navigation buttons are clicked
+  window.addEventListener('hashchange', function() {
+    const newSlug = window.location.hash.substring(1);
+    console.log('Hash changed to:', newSlug);
+    if (newSlug) {
+      loadArticle(newSlug);
+    }
+  });
 });
 
 async function loadArticle(slug) {
@@ -189,6 +198,8 @@ async function loadArticle(slug) {
 
 function createNavigationHTML(previousArticle, nextArticle) {
   let navigationHTML = '<div class="article-navigation">';
+  let hasPrev = false;
+  let hasNext = false;
   
   if (previousArticle && previousArticle.slug?.current) {
     const prevSlug = encodeURIComponent(previousArticle.slug.current);
@@ -201,6 +212,7 @@ function createNavigationHTML(previousArticle, nextArticle) {
         </div>
       </a>
     `;
+    hasPrev = true;
   }
   
   if (nextArticle && nextArticle.slug?.current) {
@@ -214,11 +226,19 @@ function createNavigationHTML(previousArticle, nextArticle) {
         <span class="nav-arrow">→</span>
       </a>
     `;
+    hasNext = true;
   }
   
   // Only add the navigation container if there are actual buttons
-  if (navigationHTML === '<div class="article-navigation">') {
+  if (!hasPrev && !hasNext) {
     return ''; // Return empty string if no navigation buttons
+  }
+  
+  // Add positioning classes
+  if (hasPrev && !hasNext) {
+    navigationHTML = navigationHTML.replace('class="article-navigation"', 'class="article-navigation only-prev"');
+  } else if (!hasPrev && hasNext) {
+    navigationHTML = navigationHTML.replace('class="article-navigation"', 'class="article-navigation only-next"');
   }
   
   navigationHTML += '</div>';

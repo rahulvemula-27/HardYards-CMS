@@ -1135,8 +1135,13 @@ footer {
   gap: 1rem;
 }
 
-.article-navigation:only-child {
-  justify-content: center;
+/* When only one button exists, position it correctly */
+.article-navigation.only-prev {
+  justify-content: flex-start;
+}
+
+.article-navigation.only-next {
+  justify-content: flex-end;
 }
 
 .nav-button {
