@@ -257,7 +257,7 @@ html {
 .mobile-menu.active {
   visibility: visible !important;
   opacity: 1 !important;
-  transform: translateX(0) !important;
+  transform: translateX(35%) !important;
   pointer-events: auto;
 }
 
