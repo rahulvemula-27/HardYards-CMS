@@ -280,9 +280,11 @@ html {
 }
 
 .mobile-menu .sports-toggle .dropdown-arrow {
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin-left: 0.5rem;
   transition: transform 0.3s ease;
+  color: var(--logo-hard);
+  font-weight: bold;
 }
 
 /* Mobile sports dropdown */
