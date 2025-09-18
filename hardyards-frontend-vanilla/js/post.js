@@ -99,6 +99,7 @@ async function loadArticle(slug) {
       title,
       slug,
       mainImage{asset->{url, altText}},
+      photoCredit,
       publishedAt,
       categories[]->{title},
       excerpt,
@@ -126,6 +127,7 @@ async function loadArticle(slug) {
         title,
         slug,
         mainImage{asset->{url, altText}},
+        photoCredit,
         publishedAt,
         categories[]->{title},
         excerpt,
@@ -168,6 +170,7 @@ async function loadArticle(slug) {
                  class="article-image">
           ` : ''}
           <div class="article-meta">
+            ${article.photoCredit ? `<div class="photo-credit">Photo: ${article.photoCredit}</div>` : ''}
             <time datetime="${article.publishedAt}">
               ${new Date(article.publishedAt).toLocaleDateString('en-US', { 
                 year: 'numeric', 
