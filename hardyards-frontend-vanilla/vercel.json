@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/article.js": {
-      "runtime": "@vercel/node@20.x"
-    }
-  },
   "rewrites": [
     {
       "source": "/post/:slug",
