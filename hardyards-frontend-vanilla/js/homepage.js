@@ -101,8 +101,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     const featuredContainer = document.getElementById("featured-article");
     if (featuredContainer) {
-      const featuredUrl = `post.html?slug=${featuredArticle.slug?.current || ''}`;
-      console.log('Featured article URL:', featuredUrl);
+        const featuredUrl = `/post/${featuredArticle.slug?.current || ''}`;
+        console.log('Featured article URL:', featuredUrl);
       
       featuredContainer.innerHTML = `
         <div class="featured-content">
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const articlesHTML = secondaryArticles.map(article => {
         console.log(`Secondary article "${article.title}" slug:`, article.slug);
         console.log(`Secondary article "${article.title}" slug.current:`, article.slug?.current);
-        const articleUrl = `post.html?slug=${article.slug?.current || ''}`;
+        const articleUrl = `/post/${article.slug?.current || ''}`;
         console.log(`Secondary article "${article.title}" URL:`, articleUrl);
         
         return `

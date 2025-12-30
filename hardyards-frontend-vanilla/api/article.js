@@ -74,8 +74,11 @@ module.exports = async (req, res) => {
   <meta name="twitter:image" content="${articleImage}"/>
   <link rel="stylesheet" href="/css/style.css"/>
   <script>
-    // Redirect to query parameter URL for client-side routing
-    window.location.href = '/post.html?slug=${encodeURIComponent(slug)}';
+    // Redirect to query parameter URL for client-side routing (backward compatibility)
+    // But we prefer clean URLs, so try clean URL first, fallback to query param
+    if (window.location.pathname !== '/post.html') {
+      window.location.href = '/post.html?slug=${encodeURIComponent(slug)}';
+    }
   </script>
 </head>
 <body>

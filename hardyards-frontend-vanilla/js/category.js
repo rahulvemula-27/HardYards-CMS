@@ -176,7 +176,7 @@ async function loadCategoryArticles(subcategory = null) {
     }
 
     const articlesHTML = articles.map(article => {
-      const articleUrl = `post.html?slug=${article.slug?.current || ''}`;
+      const articleUrl = `/post/${article.slug?.current || ''}`;
       console.log(`Creating link for "${article.title}": ${articleUrl}`);
       
       return `
