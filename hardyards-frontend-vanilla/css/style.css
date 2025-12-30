@@ -84,8 +84,8 @@ html {
 
 /* Cover Story Section */
 .cover-story-section {
-  margin-bottom: 3rem;
-  padding-bottom: 3rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
   border-bottom: 1px solid #e0e0e0;
 }
 
@@ -458,7 +458,7 @@ html {
   display: flex;
   flex-direction: row;
   gap: 2rem;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .featured-text-content {
@@ -466,22 +466,25 @@ html {
   padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .featured-image-content {
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-self: flex-start;
 }
 
 .featured-image {
   width: 100%;
   height: auto;
+  max-height: 400px;
   aspect-ratio: 16/10;
   object-fit: cover;
   border-radius: 0;
   margin-bottom: 0;
+  display: block;
 }
 
 .featured-category {
@@ -511,7 +514,7 @@ html {
 .featured-date {
   color: #666;
   font-size: 0.9rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 /* News Feed - RIGHT SIDE POSITIONING */
@@ -593,9 +596,9 @@ html {
 .secondary-articles-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
   margin-top: 2rem;
-  padding-bottom: 3rem;
+  padding-bottom: 2rem;
   border-bottom: 1px solid #e0e0e0;
 }
 
@@ -618,6 +621,7 @@ html {
   gap: 1.5rem;
   align-items: flex-start;
   padding: 0;
+  width: 100%;
 }
 
 .article-card.horizontal .article-content {
@@ -626,19 +630,23 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  min-width: 0;
 }
 
 .article-card.horizontal .article-image {
   width: 224px;
   height: 144px;
+  min-width: 224px;
   flex-shrink: 0;
-  object-fit: cover;
+  overflow: hidden;
+  display: block;
 }
 
 .article-card.horizontal .article-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 /* Vertical article card layout (for grid/latest articles) */
@@ -648,6 +656,8 @@ html {
   overflow: hidden;
   box-shadow: none;
   border: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .article-card:not(.horizontal) .article-image {
@@ -655,6 +665,14 @@ html {
   aspect-ratio: 4/3;
   height: auto;
   object-fit: cover;
+  display: block;
+}
+
+.article-card:not(.horizontal) .article-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .article-content {
