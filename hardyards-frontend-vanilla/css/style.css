@@ -616,6 +616,13 @@ html {
   border-bottom: 1px solid #e0e0e0;
 }
 
+@media (max-width: 768px) {
+  .secondary-articles-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
 .article-card {
   background: transparent;
   border-radius: 0;
