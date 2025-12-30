@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Show loading state immediately
     const featuredContainerEl = document.getElementById("featured-article");
     const secondaryContainerEl = document.getElementById("secondary-articles");
+    const moreArticlesContainerEl = document.getElementById("more-articles");
     const newsFeedEl = document.getElementById("news-feed-items");
     
     if (featuredContainerEl) {
@@ -31,6 +32,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     if (secondaryContainerEl) {
       secondaryContainerEl.innerHTML = `
+        <div class="secondary-articles-container">
+          ${Array(3).fill().map(() => `
+            <article class="article-card horizontal">
+              <div class="article-content">
+                <h3 class="article-title-placeholder"></h3>
+                <div class="article-date-placeholder"></div>
+              </div>
+              <div class="article-image">
+                <div class="article-image-placeholder"></div>
+              </div>
+            </article>
+          `).join('')}
+        </div>
+      `;
+    }
+    
+    if (moreArticlesContainerEl) {
+      moreArticlesContainerEl.innerHTML = `
         <div class="secondary-articles-container">
           ${Array(3).fill().map(() => `
             <article class="article-card horizontal">
@@ -149,6 +168,34 @@ document.addEventListener("DOMContentLoaded", async () => {
       secondaryContainer.innerHTML = `
         <div class="secondary-articles-container">
           ${articlesHTML}
+        </div>
+      `;
+    }
+
+    // More articles (articles 4-6) - Horizontal layout
+    const moreArticles = articles.slice(4, 7); // Show next 3 articles
+    const moreArticlesContainer = document.getElementById("more-articles");
+    if (moreArticlesContainer && moreArticles.length > 0) {
+      const moreArticlesHTML = moreArticles.map(article => {
+        return `
+          <article class="article-card horizontal">
+            <div class="article-content">
+              <h3 class="article-title">
+                <a href="#" onclick="navigateToArticle('${article.slug?.current || ''}'); return false;">${article.title}</a>
+              </h3>
+              ${article.excerpt ? `<p class="article-excerpt">${article.excerpt}</p>` : ''}
+              <div class="article-date">${formatDate(article.publishedAt)} • ${article.author?.name || 'HardYards Team'}</div>
+            </div>
+            <div class="article-image">
+              <img src="${article.mainImage?.asset?.url || ''}" alt="${article.title}">
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      moreArticlesContainer.innerHTML = `
+        <div class="secondary-articles-container">
+          ${moreArticlesHTML}
         </div>
       `;
     }
