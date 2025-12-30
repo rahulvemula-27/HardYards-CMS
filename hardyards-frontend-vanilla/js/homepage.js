@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Show loading state immediately
     const featuredContainerEl = document.getElementById("featured-article");
     const secondaryContainerEl = document.getElementById("secondary-articles");
-    const moreArticlesContainerEl = document.getElementById("more-articles");
     const newsFeedEl = document.getElementById("news-feed-items");
     
     if (featuredContainerEl) {
@@ -30,9 +29,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
     }
     
-    if (secondaryContainerEl) {
-      secondaryContainerEl.innerHTML = `
-        <div class="secondary-articles-grid">
+    const featuredBelowEl = document.getElementById("featured-below-articles");
+    if (featuredBelowEl) {
+      featuredBelowEl.innerHTML = `
+        <div class="featured-below-articles-grid">
           ${Array(2).fill().map(() => `
             <article class="article-card horizontal">
               <div class="article-content">
@@ -48,10 +48,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
     }
     
-    if (moreArticlesContainerEl) {
-      moreArticlesContainerEl.innerHTML = `
-        <div class="secondary-articles-grid">
-          ${Array(2).fill().map(() => `
+    if (secondaryContainerEl) {
+      secondaryContainerEl.innerHTML = `
+        <div class="secondary-articles-container">
+          ${Array(3).fill().map(() => `
             <article class="article-card horizontal">
               <div class="article-content">
                 <h3 class="article-title-placeholder"></h3>
@@ -110,10 +110,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p>No articles found.</p>
         </div>
       `;
-      const moreArticlesContainer = document.getElementById("more-articles");
-      if (moreArticlesContainer) {
-        moreArticlesContainer.innerHTML = '';
-      }
       return;
     }
 
@@ -143,8 +139,36 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
     }
 
-    // Latest Articles section - Show 2 articles side by side (horizontal grid)
-    const latestArticles = articles.slice(1, 3); // Show 2 articles side by side
+    // Articles below featured article (beside news feed) - 2 articles horizontally
+    const featuredBelowArticles = articles.slice(1, 3); // Show 2 articles side by side
+    const featuredBelowContainer = document.getElementById("featured-below-articles");
+    if (featuredBelowContainer && featuredBelowArticles.length > 0) {
+      const articlesHTML = featuredBelowArticles.map(article => {
+        return `
+          <article class="article-card horizontal">
+            <div class="article-content">
+              <h3 class="article-title">
+                <a href="#" onclick="navigateToArticle('${article.slug?.current || ''}'); return false;">${article.title}</a>
+              </h3>
+              ${article.excerpt ? `<p class="article-excerpt">${article.excerpt}</p>` : ''}
+              <div class="article-date">${formatDate(article.publishedAt)} • ${article.author?.name || 'HardYards Team'}</div>
+            </div>
+            <div class="article-image">
+              <img src="${article.mainImage?.asset?.url || ''}" alt="${article.title}">
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      featuredBelowContainer.innerHTML = `
+        <div class="featured-below-articles-grid">
+          ${articlesHTML}
+        </div>
+      `;
+    }
+
+    // Latest Articles section - Vertical layout with 3 articles
+    const latestArticles = articles.slice(3, 6); // Show next 3 articles vertically
     const secondaryContainer = document.getElementById("secondary-articles");
     if (secondaryContainer) {
       const articlesHTML = latestArticles.map(article => {
@@ -170,39 +194,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       }).join('');
 
       secondaryContainer.innerHTML = `
-        <div class="secondary-articles-grid">
+        <div class="secondary-articles-container">
           ${articlesHTML}
         </div>
       `;
     }
 
-    // More articles (articles 3-4) - Show 2 articles side by side (horizontal grid)
-    const moreArticles = articles.slice(3, 5); // Show next 2 articles side by side
-    const moreArticlesContainer = document.getElementById("more-articles");
-    if (moreArticlesContainer && moreArticles.length > 0) {
-      const moreArticlesHTML = moreArticles.map(article => {
-        return `
-          <article class="article-card horizontal">
-            <div class="article-content">
-              <h3 class="article-title">
-                <a href="#" onclick="navigateToArticle('${article.slug?.current || ''}'); return false;">${article.title}</a>
-              </h3>
-              ${article.excerpt ? `<p class="article-excerpt">${article.excerpt}</p>` : ''}
-              <div class="article-date">${formatDate(article.publishedAt)} • ${article.author?.name || 'HardYards Team'}</div>
-            </div>
-            <div class="article-image">
-              <img src="${article.mainImage?.asset?.url || ''}" alt="${article.title}">
-            </div>
-          </article>
-        `;
-      }).join('');
-
-      moreArticlesContainer.innerHTML = `
-        <div class="secondary-articles-grid">
-          ${moreArticlesHTML}
-        </div>
-      `;
-    }
+    // More articles section removed - articles now displayed in featured-below and latest sections
      
            // Populate news feed with latest 6 articles
       const newsFeedContainer = document.getElementById("news-feed-items");
@@ -235,14 +233,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         <p>Error loading articles. Please try again later.</p>
       </div>
     `;
-    const moreArticlesContainer = document.getElementById("more-articles");
-    if (moreArticlesContainer) {
-      moreArticlesContainer.innerHTML = `
-        <div class="error-message">
-          <p>Error loading articles. Please try again later.</p>
-        </div>
-      `;
-    }
   }
 });
 

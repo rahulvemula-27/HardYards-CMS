@@ -452,6 +452,20 @@ html {
   border-bottom: 1px solid #e0e0e0;
 }
 
+.featured-left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Articles below featured article - 2 columns side by side */
+.featured-below-articles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
 #featured-article {
   flex: 2;
 }
