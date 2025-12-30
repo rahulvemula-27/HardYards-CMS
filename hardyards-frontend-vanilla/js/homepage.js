@@ -282,6 +282,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         <p>Error loading articles. Please try again later.</p>
       </div>
     `;
+    const moreArticlesContainer = document.getElementById("more-articles");
+    if (moreArticlesContainer) {
+      moreArticlesContainer.innerHTML = `
+        <div class="error-message">
+          <p>Error loading articles. Please try again later.</p>
+        </div>
+      `;
+    }
   }
 });
 
