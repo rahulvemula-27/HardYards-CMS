@@ -1,7 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
-  // Get slug from query parameter (clean URLs use ?slug=)
+  // Get slug from query parameter (post.html?slug=) or from clean URL path (/post/slug)
   const urlParams = new URLSearchParams(window.location.search);
   let slug = urlParams.get('slug');
+  
+  // If no query param, try to get from clean URL path (/post/slug)
+  if (!slug) {
+    const pathMatch = window.location.pathname.match(/\/post\/([^/]+)/);
+    if (pathMatch) {
+      slug = pathMatch[1];
+    }
+  }
   
   // Fallback to hash for backward compatibility with old links
   if (!slug) {
