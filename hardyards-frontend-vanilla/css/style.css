@@ -623,15 +623,7 @@ html {
   grid-template-columns: repeat(2, 1fr);
 }
 
-.category-row-4 {
-  grid-template-columns: repeat(4, 1fr);
-}
-
 @media (max-width: 1024px) {
-  .category-row-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
   .category-row-3 {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -639,8 +631,7 @@ html {
 
 @media (max-width: 768px) {
   .category-row-3,
-  .category-row-2,
-  .category-row-4 {
+  .category-row-2 {
     grid-template-columns: 1fr;
   }
 }

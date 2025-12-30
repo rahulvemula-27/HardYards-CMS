@@ -188,8 +188,8 @@ async function loadCategoryArticles(subcategory = null) {
       return;
     }
 
-    // Group articles into rows: 3, 2, 4 pattern (repeating)
-    const rowPattern = [3, 2, 4];
+    // Group articles into rows: 3, 2 pattern (repeating)
+    const rowPattern = [3, 2];
     let articleIndex = 0;
     let rowsHTML = '';
     
