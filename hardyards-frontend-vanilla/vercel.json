@@ -6,7 +6,7 @@
     },
     {
       "source": "/post",
-      "destination": "/post.html"
+      "destination": "/api/article"
     }
   ],
   "headers": [

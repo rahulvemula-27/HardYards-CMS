@@ -1,13 +1,26 @@
 module.exports = async (req, res) => {
-  const { slug } = req.query;
+  // Handle both /post/:slug (via rewrite) and /post?slug=xxx formats
+  let slug = req.query.slug;
+  
+  // If slug is not in query params, try to get it from URL path
+  if (!slug && req.url) {
+    const urlMatch = req.url.match(/\/post\/([^?]+)/);
+    if (urlMatch) {
+      slug = urlMatch[1];
+    }
+  }
 
   if (!slug) {
     return res.status(400).send('Slug is required');
   }
+  
+  // Decode slug if it's URL encoded
+  slug = decodeURIComponent(slug);
 
   try {
-    // Fetch article from Sanity
-    const query = `*[_type == "post" && slug.current == "${slug}"][0]{
+    // Fetch article from Sanity - escape slug to prevent injection
+    const escapedSlug = slug.replace(/"/g, '\\"');
+    const query = `*[_type == "post" && slug.current == "${escapedSlug}"][0]{
       title,
       slug,
       mainImage{asset->{url, altText}},
@@ -31,10 +44,14 @@ module.exports = async (req, res) => {
     }
 
     const baseUrl = req.headers.host ? `https://${req.headers.host}` : 'https://hardyards.org';
-    const articleUrl = `${baseUrl}/post/${slug}`;
+    const articleUrl = `${baseUrl}/post/${encodeURIComponent(slug)}`;
     const articleTitle = escapeHtml(article.title || 'HardYards - Article');
-    const articleDescription = escapeHtml(article.excerpt || 'Read the latest articles and stories from HardYards.');
-    const articleImage = article.mainImage?.asset?.url || `${baseUrl}/default-og-image.jpg`;
+    const articleDescription = escapeHtml(article.excerpt || article.title || 'Read the latest articles and stories from HardYards.');
+    // Ensure image URL is absolute and properly formatted
+    let articleImage = article.mainImage?.asset?.url || `${baseUrl}/default-og-image.jpg`;
+    if (articleImage && !articleImage.startsWith('http')) {
+      articleImage = `${baseUrl}${articleImage}`;
+    }
     
     // Generate HTML with proper meta tags for social sharing
     const html = `<!DOCTYPE html>
@@ -58,7 +75,7 @@ module.exports = async (req, res) => {
   <link rel="stylesheet" href="/css/style.css"/>
   <script>
     // Redirect to query parameter URL for client-side routing
-    window.location.href = '/post.html?slug=${slug}';
+    window.location.href = '/post.html?slug=${encodeURIComponent(slug)}';
   </script>
 </head>
 <body>
