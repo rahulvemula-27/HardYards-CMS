@@ -175,30 +175,46 @@ async function loadCategoryArticles(subcategory = null) {
       return;
     }
 
-    const articlesHTML = articles.map(article => {
-      const articleUrl = `/post/${article.slug?.current || ''}`;
-      console.log(`Creating link for "${article.title}": ${articleUrl}`);
-      
-      return `
-        <article class="article-card">
-          <div class="article-image">
-            <img src="${article.mainImage?.asset?.url || ''}" alt="${article.title}">
-          </div>
-          <div class="article-content">
-            <h3 class="article-title">
-              <a href="#" onclick="navigateToArticle('${article.slug?.current || ''}'); return false;">${article.title}</a>
-            </h3>
-            <div class="article-date">${formatDate(article.publishedAt)} • ${article.author?.name || 'HardYards Team'}</div>
-          </div>
-        </article>
-      `;
-    }).join('');
+    // Group articles into rows: 3, 2, 4 pattern (repeating)
+    const rowPattern = [3, 2, 4];
+    let articleIndex = 0;
+    let rowsHTML = '';
+    
+    while (articleIndex < articles.length) {
+      for (let patternIndex = 0; patternIndex < rowPattern.length && articleIndex < articles.length; patternIndex++) {
+        const articlesInRow = rowPattern[patternIndex];
+        const rowArticles = articles.slice(articleIndex, articleIndex + articlesInRow);
+        
+        if (rowArticles.length > 0) {
+          const articlesHTML = rowArticles.map(article => {
+            return `
+              <article class="article-card horizontal">
+                <div class="article-content">
+                  <h3 class="article-title">
+                    <a href="#" onclick="navigateToArticle('${article.slug?.current || ''}'); return false;">${article.title}</a>
+                  </h3>
+                  ${article.excerpt ? `<p class="article-excerpt">${article.excerpt}</p>` : ''}
+                  <div class="article-date">${formatDate(article.publishedAt)} • ${article.author?.name || 'HardYards Team'}</div>
+                </div>
+                <div class="article-image">
+                  <img src="${article.mainImage?.asset?.url || ''}" alt="${article.title}">
+                </div>
+              </article>
+            `;
+          }).join('');
+          
+          rowsHTML += `
+            <div class="category-row category-row-${articlesInRow}">
+              ${articlesHTML}
+            </div>
+          `;
+        }
+        
+        articleIndex += articlesInRow;
+      }
+    }
 
-    container.innerHTML = `
-      <div class="article-grid">
-        ${articlesHTML}
-      </div>
-    `;
+    container.innerHTML = rowsHTML;
   } catch (error) {
     console.error("Error loading articles:", error);
     container.innerHTML = `

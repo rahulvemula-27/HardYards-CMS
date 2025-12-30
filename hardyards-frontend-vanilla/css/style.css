@@ -608,6 +608,43 @@ html {
   padding-bottom: 2rem;
 }
 
+/* Category page rows - repeating pattern: 3, 2, 4 */
+.category-row {
+  display: grid;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.category-row-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.category-row-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.category-row-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .category-row-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .category-row-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .category-row-3,
+  .category-row-2,
+  .category-row-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Secondary Articles - Horizontal Layout (text left, image right) */
 .secondary-articles-container {
   display: flex;
