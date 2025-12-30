@@ -32,17 +32,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     if (secondaryContainerEl) {
       secondaryContainerEl.innerHTML = `
-        <div class="secondary-articles-container">
-          <article class="article-card horizontal">
-            <div class="article-content">
-              <h3 class="article-title-placeholder"></h3>
-              <div class="article-date-placeholder"></div>
-            </div>
-            <div class="article-image">
-              <div class="article-image-placeholder"></div>
-            </div>
-          </article>
-        </div>
         <div class="secondary-articles-grid">
           ${Array(2).fill().map(() => `
             <article class="article-card horizontal">
@@ -154,31 +143,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
     }
 
-    // Latest Articles section: First article, then 2 articles horizontally below
-    const latestArticle = articles.slice(1, 2); // First article in latest section
-    const latestArticlesBelow = articles.slice(2, 4); // Next 2 articles horizontally
+    // Latest Articles section - Show 2 articles side by side (horizontal grid)
+    const latestArticles = articles.slice(1, 3); // Show 2 articles side by side
     const secondaryContainer = document.getElementById("secondary-articles");
     if (secondaryContainer) {
-      // First article (single, horizontal layout)
-      const firstArticleHTML = latestArticle.map(article => {
-        return `
-          <article class="article-card horizontal">
-            <div class="article-content">
-              <h3 class="article-title">
-                <a href="#" onclick="navigateToArticle('${article.slug?.current || ''}'); return false;">${article.title}</a>
-              </h3>
-              ${article.excerpt ? `<p class="article-excerpt">${article.excerpt}</p>` : ''}
-              <div class="article-date">${formatDate(article.publishedAt)} • ${article.author?.name || 'HardYards Team'}</div>
-            </div>
-            <div class="article-image">
-              <img src="${article.mainImage?.asset?.url || ''}" alt="${article.title}">
-            </div>
-          </article>
-        `;
-      }).join('');
-
-      // Next 2 articles (horizontal grid layout)
-      const belowArticlesHTML = latestArticlesBelow.map(article => {
+      const articlesHTML = latestArticles.map(article => {
+        console.log(`Latest article "${article.title}" slug:`, article.slug);
+        console.log(`Latest article "${article.title}" slug.current:`, article.slug?.current);
+        const articleUrl = `/post/${article.slug?.current || ''}`;
+        console.log(`Latest article "${article.title}" URL:`, articleUrl);
+        
         return `
           <article class="article-card horizontal">
             <div class="article-content">
@@ -196,44 +170,38 @@ document.addEventListener("DOMContentLoaded", async () => {
       }).join('');
 
       secondaryContainer.innerHTML = `
-        <div class="secondary-articles-container">
-          ${firstArticleHTML}
-        </div>
         <div class="secondary-articles-grid">
-          ${belowArticlesHTML}
+          ${articlesHTML}
         </div>
       `;
     }
 
-    // More articles (articles 4-6) - Horizontal grid layout (2 articles side by side)
-    const moreArticles = articles.slice(4, 7); // Show next 3 articles (will display 2 at a time)
+    // More articles (articles 3-4) - Show 2 articles side by side (horizontal grid)
+    const moreArticles = articles.slice(3, 5); // Show next 2 articles side by side
     const moreArticlesContainer = document.getElementById("more-articles");
     if (moreArticlesContainer && moreArticles.length > 0) {
-      // Display articles in groups of 2 (horizontal)
-      let moreArticlesHTML = '';
-      for (let i = 0; i < moreArticles.length; i += 2) {
-        const articlePair = moreArticles.slice(i, i + 2);
-        const pairHTML = articlePair.map(article => {
-          return `
-            <article class="article-card horizontal">
-              <div class="article-content">
-                <h3 class="article-title">
-                  <a href="#" onclick="navigateToArticle('${article.slug?.current || ''}'); return false;">${article.title}</a>
-                </h3>
-                ${article.excerpt ? `<p class="article-excerpt">${article.excerpt}</p>` : ''}
-                <div class="article-date">${formatDate(article.publishedAt)} • ${article.author?.name || 'HardYards Team'}</div>
-              </div>
-              <div class="article-image">
-                <img src="${article.mainImage?.asset?.url || ''}" alt="${article.title}">
-              </div>
-            </article>
-          `;
-        }).join('');
-        
-        moreArticlesHTML += `<div class="secondary-articles-grid">${pairHTML}</div>`;
-      }
+      const moreArticlesHTML = moreArticles.map(article => {
+        return `
+          <article class="article-card horizontal">
+            <div class="article-content">
+              <h3 class="article-title">
+                <a href="#" onclick="navigateToArticle('${article.slug?.current || ''}'); return false;">${article.title}</a>
+              </h3>
+              ${article.excerpt ? `<p class="article-excerpt">${article.excerpt}</p>` : ''}
+              <div class="article-date">${formatDate(article.publishedAt)} • ${article.author?.name || 'HardYards Team'}</div>
+            </div>
+            <div class="article-image">
+              <img src="${article.mainImage?.asset?.url || ''}" alt="${article.title}">
+            </div>
+          </article>
+        `;
+      }).join('');
 
-      moreArticlesContainer.innerHTML = moreArticlesHTML;
+      moreArticlesContainer.innerHTML = `
+        <div class="secondary-articles-grid">
+          ${moreArticlesHTML}
+        </div>
+      `;
     }
      
            // Populate news feed with latest 6 articles

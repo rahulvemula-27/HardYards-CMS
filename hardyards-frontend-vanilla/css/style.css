@@ -605,6 +605,17 @@ html {
   border-bottom: 1px solid #e0e0e0;
 }
 
+/* Secondary Articles Grid - 2 columns side by side */
+.secondary-articles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 0;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
 .article-card {
   background: transparent;
   border-radius: 0;
@@ -892,10 +903,6 @@ footer {
   
   .featured-image-content {
     order: -1; /* Image first on mobile */
-  }
-  
-  .secondary-articles-grid {
-    grid-template-columns: 1fr;
   }
   
   .news-feed {
