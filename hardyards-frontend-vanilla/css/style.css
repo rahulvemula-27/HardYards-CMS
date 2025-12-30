@@ -894,6 +894,10 @@ footer {
     order: -1; /* Image first on mobile */
   }
   
+  .secondary-articles-grid {
+    grid-template-columns: 1fr;
+  }
+  
   .news-feed {
     margin-top: 2rem;
     margin-left: 0;
