@@ -18,12 +18,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (featuredContainerEl) {
       featuredContainerEl.innerHTML = `
         <div class="featured-content">
-          <div class="featured-image-content">
-            <div class="featured-image-placeholder"></div>
-          </div>
           <div class="featured-text-content">
             <h2 class="featured-title-placeholder"></h2>
             <div class="featured-date-placeholder"></div>
+          </div>
+          <div class="featured-image-content">
+            <div class="featured-image-placeholder"></div>
           </div>
         </div>
       `;
@@ -31,15 +31,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     if (secondaryContainerEl) {
       secondaryContainerEl.innerHTML = `
-        <div class="article-grid">
-          ${Array(6).fill().map(() => `
-            <article class="article-card">
-              <div class="article-image">
-                <div class="article-image-placeholder"></div>
-              </div>
+        <div class="secondary-articles-container">
+          ${Array(3).fill().map(() => `
+            <article class="article-card horizontal">
               <div class="article-content">
                 <h3 class="article-title-placeholder"></h3>
                 <div class="article-date-placeholder"></div>
+              </div>
+              <div class="article-image">
+                <div class="article-image-placeholder"></div>
               </div>
             </article>
           `).join('')}
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // Featured article (first article)
+    // Featured article (first article) - Horizontal layout (text left, image right)
     const featuredArticle = articles[0];
     console.log('Featured article slug:', featuredArticle.slug);
     console.log('Featured article slug.current:', featuredArticle.slug?.current);
@@ -105,24 +105,23 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.log('Featured article URL:', featuredUrl);
       
       featuredContainer.innerHTML = `
-        <div class="featured-container">
-          <div class="featured-content">
-            <div class="featured-image-content">
-              <img src="${featuredArticle.mainImage?.asset?.url || ''}" alt="${featuredArticle.title}" class="featured-image">
-            </div>
-            <div class="featured-text-content">
-              <h2 class="featured-title">
-                <a href="#" onclick="navigateToArticle('${featuredArticle.slug?.current || ''}'); return false;">${featuredArticle.title}</a>
-              </h2>
-              <div class="featured-date">${formatDate(featuredArticle.publishedAt)} • ${featuredArticle.author?.name || 'HardYards Team'}</div>
-            </div>
+        <div class="featured-content">
+          <div class="featured-text-content">
+            <h2 class="featured-title">
+              <a href="#" onclick="navigateToArticle('${featuredArticle.slug?.current || ''}'); return false;">${featuredArticle.title}</a>
+            </h2>
+            ${featuredArticle.excerpt ? `<p class="featured-excerpt">${featuredArticle.excerpt}</p>` : ''}
+            <div class="featured-date">${formatDate(featuredArticle.publishedAt)} • ${featuredArticle.author?.name || 'HardYards Team'}</div>
+          </div>
+          <div class="featured-image-content">
+            <img src="${featuredArticle.mainImage?.asset?.url || ''}" alt="${featuredArticle.title}" class="featured-image">
           </div>
         </div>
       `;
     }
 
-    // Secondary articles (remaining articles)
-    const secondaryArticles = articles.slice(1, 7);
+    // Secondary articles (remaining articles) - Horizontal layout
+    const secondaryArticles = articles.slice(1, 4); // Show 3 articles in horizontal layout
     const secondaryContainer = document.getElementById("secondary-articles");
     if (secondaryContainer) {
       const articlesHTML = secondaryArticles.map(article => {
@@ -132,26 +131,26 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(`Secondary article "${article.title}" URL:`, articleUrl);
         
         return `
-          <article class="article-card">
+          <article class="article-card horizontal">
+            <div class="article-content">
+              <h3 class="article-title">
+                <a href="#" onclick="navigateToArticle('${article.slug?.current || ''}'); return false;">${article.title}</a>
+              </h3>
+              <div class="article-date">${formatDate(article.publishedAt)} • ${article.author?.name || 'HardYards Team'}</div>
+            </div>
             <div class="article-image">
               <img src="${article.mainImage?.asset?.url || ''}" alt="${article.title}">
-            </div>
-            <div class="article-content">
-                                       <h3 class="article-title">
-              <a href="#" onclick="navigateToArticle('${article.slug?.current || ''}'); return false;">${article.title}</a>
-            </h3>
-            <div class="article-date">${formatDate(article.publishedAt)} • ${article.author?.name || 'HardYards Team'}</div>
             </div>
           </article>
         `;
       }).join('');
 
-             secondaryContainer.innerHTML = `
-         <div class="article-grid">
-           ${articlesHTML}
-         </div>
-       `;
-     }
+      secondaryContainer.innerHTML = `
+        <div class="secondary-articles-container">
+          ${articlesHTML}
+        </div>
+      `;
+    }
      
            // Populate news feed with latest 6 articles
       const newsFeedContainer = document.getElementById("news-feed-items");
@@ -207,8 +206,8 @@ function formatCategories(categories) {
 function navigateToArticle(slug) {
   console.log('Navigating to article with slug:', slug);
   if (slug) {
-    // Use hash-based routing which works better with serve
-    const targetUrl = `${window.location.origin}/post.html#${slug}`;
+    // Use clean URL format
+    const targetUrl = `${window.location.origin}/post/${slug}`;
     console.log('Attempting navigation to:', targetUrl);
     window.location.href = targetUrl;
   } else {

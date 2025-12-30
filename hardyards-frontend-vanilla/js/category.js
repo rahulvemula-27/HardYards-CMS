@@ -236,8 +236,8 @@ function formatSubcategories(subcategories) {
 function navigateToArticle(slug) {
   console.log('Navigating to article with slug:', slug);
   if (slug) {
-    // Use hash-based routing which works better with serve
-    const targetUrl = `${window.location.origin}/post.html#${slug}`;
+    // Use clean URL format
+    const targetUrl = `${window.location.origin}/post/${slug}`;
     console.log('Attempting navigation to:', targetUrl);
     window.location.href = targetUrl;
   } else {

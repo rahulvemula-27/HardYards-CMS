@@ -84,14 +84,16 @@ html {
 
 /* Cover Story Section */
 .cover-story-section {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .cover-story-title {
   font-family: 'Sentinel-Semibold', serif;
   font-size: 3rem;
   color: var(--headline-red);
-  margin: 0.93rem 0 2rem 0;
+  margin: 0 0 2rem 0;
   text-align: left;
   font-weight: normal;
   text-transform: uppercase;
@@ -431,18 +433,21 @@ html {
 .hero-title {
   text-align: left;
   margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
   color: var(--headline-red);
   font-size: 2.5rem;
-  font-weight: bold;
+  font-weight: normal;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* Featured Article - UPDATED LAYOUT */
+/* Featured Article - HORIZONTAL LAYOUT (text left, image right) */
 .featured-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
   gap: 2rem;
-  margin-bottom: 1.08rem;
+  margin-bottom: 0;
 }
 
 #featured-article {
@@ -451,24 +456,32 @@ html {
 
 .featured-content {
   display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: center;
+}
+
+.featured-text-content {
+  flex: 1;
+  padding: 0;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .featured-image-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
 
 .featured-image {
   width: 100%;
-  height: 400px;
+  height: auto;
+  aspect-ratio: 16/10;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-.featured-text-content {
-  padding: 0;
+  border-radius: 0;
+  margin-bottom: 0;
 }
 
 .featured-category {
@@ -477,10 +490,11 @@ html {
 
 .featured-title {
   color: var(--headline-red);
-  font-size: 2rem;
-  margin: 0.5rem 0;
+  font-size: 2.5rem;
+  margin: 0 0 1rem 0;
   text-decoration: none;
   display: block;
+  line-height: 1.2;
 }
 
 .featured-title:hover {
@@ -491,6 +505,7 @@ html {
   color: var(--main-blue);
   font-size: 1.1rem;
   line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
 .featured-date {
@@ -499,11 +514,11 @@ html {
   margin-top: 1rem;
 }
 
-/* News Feed - UPDATED POSITIONING */
+/* News Feed - RIGHT SIDE POSITIONING */
 .news-feed {
   flex: 1;
   background: #fff;
-  padding: 1.5rem;
+  padding: 0;
   border-radius: 0;
   border: 1px solid #e0e0e0;
   height: fit-content;
@@ -512,20 +527,26 @@ html {
 }
 
 .news-feed h2 {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   color: var(--main-blue);
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
+  margin: 0;
+  padding: 1.5rem;
   border-bottom: 1px solid #e0e0e0;
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-align: center;
 }
 
 .news-feed-item {
   display: flex;
-  justify-content: space-between;
-  padding: 1rem 0;
-  border-bottom: 1px solid #e0e0e0;
+  gap: 1.5rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.news-feed-item:hover {
+  background-color: #fafafa;
 }
 
 .news-feed-item:last-child {
@@ -535,53 +556,109 @@ html {
 .news-feed-date {
   color: var(--logo-yards);
   font-weight: 600;
-  font-family: monospace;
-  min-width: 60px;
-  font-size: 0.9rem;
+  font-family: 'Segoe UI', monospace;
+  min-width: 64px;
+  flex-shrink: 0;
+  font-size: 0.875rem;
 }
 
 .news-feed-title {
   flex: 1;
   color: var(--main-blue);
-  font-weight: 500;
-  font-size: 0.95rem;
-  padding-left: 1rem;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.4;
 }
 
-.news-feed-title:hover {
-  color: var(--headline-red);
-  text-decoration: underline;
+.news-feed-title a {
+  color: inherit;
+  text-decoration: none;
 }
 
-/* Article Cards */
+.news-feed-title:hover a,
+.news-feed-title a:hover {
+  color: var(--logo-hard);
+}
+
+/* Article Cards - Grid Layout for Latest Articles and Category Pages */
 .article-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* Secondary Articles - Horizontal Layout (text left, image right) */
+.secondary-articles-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .article-card {
   background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+  transition: none;
   border: none;
 }
 
 .article-card:hover {
-  transform: translateY(-5px);
+  transform: none;
 }
 
-.article-image {
+/* Horizontal article card layout (for secondary articles) */
+.article-card.horizontal {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 0;
+}
+
+.article-card.horizontal .article-content {
+  flex: 1;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.article-card.horizontal .article-image {
+  width: 224px;
+  height: 144px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.article-card.horizontal .article-image img {
   width: 100%;
-  height: 200px;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Vertical article card layout (for grid/latest articles) */
+.article-card:not(.horizontal) {
+  background: #fff;
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: none;
+  border: none;
+}
+
+.article-card:not(.horizontal) .article-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  height: auto;
   object-fit: cover;
 }
 
 .article-content {
-  padding: 1.5rem;
+  padding: 0;
   border: none;
   background: none;
 }
@@ -592,10 +669,16 @@ html {
 
 .article-title {
   color: var(--headline-red);
-  font-size: 1.2rem;
-  margin: 0.5rem 0;
+  font-size: 1.25rem;
+  margin: 0 0 0.75rem 0;
   text-decoration: none;
   display: block;
+  line-height: 1.3;
+}
+
+.article-card.horizontal .article-title {
+  font-size: 1.25rem;
+  line-height: 1.3;
 }
 
 .article-title:hover {
@@ -604,17 +687,22 @@ html {
 
 .article-excerpt {
   color: var(--main-blue);
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   line-height: 1.5;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   border: none;
   background: none;
   padding: 0;
 }
 
+.article-card.horizontal .article-excerpt {
+  display: none; /* Hide excerpt in horizontal layout */
+}
+
 .article-date {
   color: #666;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
+  margin-top: auto;
 }
 
 /* ========== ARTICLE META STYLES ========== */
@@ -689,9 +777,11 @@ html {
   font-family: 'Sentinel-Semibold', serif;
   font-size: 2rem;
   color: #036b40;
-  margin: 1.66rem 0 2rem 0;
-  text-align: center;
+  margin: 3rem 0 2rem 0;
+  text-align: left;
   font-weight: normal;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 /* Article Page */
@@ -768,7 +858,15 @@ footer {
 /* ========== RESPONSIVE STYLES ========== */
 @media (max-width: 1024px) {
   .featured-container {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+  
+  .featured-content {
+    flex-direction: column !important;
+  }
+  
+  .featured-image-content {
+    order: -1; /* Image first on mobile */
   }
   
   .news-feed {
@@ -776,6 +874,15 @@ footer {
     margin-left: 0;
     width: 100%;
     min-width: unset;
+  }
+  
+  .article-card.horizontal {
+    flex-direction: column;
+  }
+  
+  .article-card.horizontal .article-image {
+    width: 100%;
+    height: 200px;
   }
 }
 
@@ -865,74 +972,39 @@ footer {
   }
 }
 
-/* Enforce min-height for all article cards except featured, and push date/author to bottom */
-.article-card:not(.featured-container) {
-  width: 600px;
-  min-height: 440px;
-  max-width: 100%;
+/* Vertical article cards in grid (latest articles) - keep original sizing */
+.article-card:not(.horizontal):not(.featured-container) {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
-.article-card:not(.featured-container) .article-content {
+.article-card:not(.horizontal) .article-content {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  padding: 1rem 0;
 }
 
-.article-card:not(.featured-container) .article-date {
+.article-card:not(.horizontal) .article-date {
   margin-top: auto;
   color: #666;
-  font-size: 0.95rem;
-  font-weight: 500;
-  background: #fff;
-  padding-top: 0.5rem;
-}
-
-@media (max-width: 650px) {
-  .article-card:not(.featured-container) {
-    width: 100%;
-    min-height: 320px;
-  }
-}
-
-/* Article card image full width and 3:2 aspect ratio */
-.article-card:not(.featured-container) .article-image {
-  width: 100%;
-  aspect-ratio: 3/2;
-  height: auto;
-  min-height: unset;
-  max-height: unset;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-}
-
-.article-card:not(.featured-container) .article-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-  display: block;
+  font-size: 0.875rem;
 }
 
 /* Article detail page styles */
 .article-detail {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 2rem 1rem;
 }
 
 .article-header {
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
 }
 
 .back-navigation {
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
 }
 
 .back-button {
@@ -961,19 +1033,26 @@ footer {
   height: auto;
   max-height: 500px;
   object-fit: cover;
-  border-radius: 8px;
-  margin: 20px 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  margin: 1.5rem 0;
+  box-shadow: none;
 }
 
 .article-meta {
   display: flex;
-  align-items: center;
-  gap: 15px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
   color: #666;
   font-size: 0.9rem;
-  margin: 20px 0;
-  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+
+.photo-credit {
+  font-size: 0.875rem;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 0;
 }
 
 .article-category {
@@ -1005,7 +1084,7 @@ footer {
 }
 
 .article-content p {
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
   font-size: 1.1rem;
 }
 
@@ -1205,6 +1284,7 @@ footer {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }

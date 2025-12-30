@@ -1,9 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
-  // Get slug from hash instead of query parameters
-  const slug = window.location.hash.substring(1); // Remove the # symbol
+  // Get slug from query parameter (clean URLs use ?slug=)
+  const urlParams = new URLSearchParams(window.location.search);
+  let slug = urlParams.get('slug');
+  
+  // Fallback to hash for backward compatibility with old links
+  if (!slug) {
+    slug = window.location.hash.substring(1);
+  }
   
   console.log('Post.js - Current URL:', window.location.href);
-  console.log('Post.js - Slug from hash:', slug);
+  console.log('Post.js - Slug:', slug);
   
   if (slug) {
     loadArticle(slug);
@@ -17,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
     `;
   }
   
-  // Listen for hash changes to reload article when navigation buttons are clicked
+  // Listen for hash changes to reload article when navigation buttons are clicked (backward compatibility)
   window.addEventListener('hashchange', function() {
     const newSlug = window.location.hash.substring(1);
     console.log('Hash changed to:', newSlug);
@@ -155,6 +161,9 @@ async function loadArticle(slug) {
     // Create navigation HTML
     const navigationHTML = createNavigationHTML(previousArticle, nextArticle);
 
+    // Update Open Graph and Twitter meta tags for social sharing
+    updateMetaTags(article, decodedSlug);
+
     container.innerHTML = `
       <article class="article-detail">
         <div class="article-header">
@@ -199,6 +208,53 @@ async function loadArticle(slug) {
   }
 }
 
+// Function to update meta tags for social sharing
+function updateMetaTags(article, slug) {
+  const baseUrl = window.location.origin;
+  const currentUrl = `${baseUrl}/post/${slug}`;
+  const articleTitle = article.title || 'HardYards - Article';
+  const articleDescription = article.excerpt || 'Read the latest articles and stories from HardYards.';
+  const articleImage = article.mainImage?.asset?.url || `${baseUrl}/default-og-image.jpg`;
+  
+  // Update or create meta tags
+  const metaTags = {
+    'title': articleTitle,
+    'description': articleDescription,
+    'og:title': articleTitle,
+    'og:description': articleDescription,
+    'og:type': 'article',
+    'og:url': currentUrl,
+    'og:image': articleImage,
+    'twitter:card': 'summary_large_image',
+    'twitter:title': articleTitle,
+    'twitter:description': articleDescription,
+    'twitter:image': articleImage
+  };
+  
+  // Update title
+  document.title = articleTitle;
+  
+  // Update or create meta tags
+  Object.keys(metaTags).forEach(key => {
+    let meta = document.querySelector(`meta[property="${key}"], meta[name="${key}"]`);
+    
+    if (!meta) {
+      // Create new meta tag
+      meta = document.createElement('meta');
+      if (key.startsWith('og:') || key.startsWith('twitter:')) {
+        meta.setAttribute('property', key);
+      } else {
+        meta.setAttribute('name', key);
+      }
+      document.head.appendChild(meta);
+    }
+    
+    meta.setAttribute('content', metaTags[key]);
+  });
+  
+  // Note: URL updating happens via Vercel rewrite, so we don't need to pushState here
+}
+
 function createNavigationHTML(previousArticle, nextArticle) {
   let navigationHTML = '<div class="article-navigation">';
   let hasPrev = false;
@@ -206,8 +262,8 @@ function createNavigationHTML(previousArticle, nextArticle) {
   
   if (previousArticle && previousArticle.slug?.current) {
     const prevSlug = encodeURIComponent(previousArticle.slug.current);
-    navigationHTML += `
-      <a href="post.html#${prevSlug}" class="nav-button prev-button">
+      navigationHTML += `
+      <a href="/post/${prevSlug}" class="nav-button prev-button">
         <span class="nav-arrow">←</span>
         <div class="nav-content">
           <span class="nav-label">Previous Article</span>
@@ -220,8 +276,8 @@ function createNavigationHTML(previousArticle, nextArticle) {
   
   if (nextArticle && nextArticle.slug?.current) {
     const nextSlug = encodeURIComponent(nextArticle.slug.current);
-    navigationHTML += `
-      <a href="post.html#${nextSlug}" class="nav-button next-button">
+      navigationHTML += `
+      <a href="/post/${nextSlug}" class="nav-button next-button">
         <div class="nav-content">
           <span class="nav-label">Next Article</span>
           <span class="nav-title">${nextArticle.title}</span>

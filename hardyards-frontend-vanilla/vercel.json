@@ -1,0 +1,29 @@
+{
+  "functions": {
+    "api/article.js": {
+      "runtime": "@vercel/node"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/post/:slug",
+      "destination": "/api/article?slug=:slug"
+    },
+    {
+      "source": "/post",
+      "destination": "/post.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "**/*.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ]
+}
+
