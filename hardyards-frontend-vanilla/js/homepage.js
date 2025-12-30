@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
     }
 
-    // Fetch latest articles from Sanity
+    // Fetch latest articles from Sanity (need at least 7: 1 featured + 3 latest + 3 more)
     const query = `*[_type == "post"] | order(publishedAt desc)[0...10] {
       _id,
       title,
@@ -110,6 +110,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p>No articles found.</p>
         </div>
       `;
+      const moreArticlesContainer = document.getElementById("more-articles");
+      if (moreArticlesContainer) {
+        moreArticlesContainer.innerHTML = '';
+      }
       return;
     }
 
@@ -231,6 +235,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         <p>Error loading articles. Please try again later.</p>
       </div>
     `;
+    const moreArticlesContainer = document.getElementById("more-articles");
+    if (moreArticlesContainer) {
+      moreArticlesContainer.innerHTML = `
+        <div class="error-message">
+          <p>Error loading articles. Please try again later.</p>
+        </div>
+      `;
+    }
   }
 });
 
