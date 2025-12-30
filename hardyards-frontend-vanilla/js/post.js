@@ -189,6 +189,13 @@ async function loadArticle(slug) {
             </time>
             <span class="article-author">• ${article.author?.name || 'HardYards Team'}</span>
           </div>
+          ${article.mainImage ? `
+            <div class="share-image-button-container">
+              <button onclick="shareArticleImage('${article.mainImage.asset.url}', '${article.title.replace(/'/g, "\\'")}')" class="share-image-button">
+                📷 Share Article Image
+              </button>
+            </div>
+          ` : ''}
         </div>
         <div class="article-content">
           ${article.excerpt ? `<p class="article-excerpt">${article.excerpt}</p>` : ''}
@@ -302,6 +309,35 @@ function createNavigationHTML(previousArticle, nextArticle) {
   
   navigationHTML += '</div>';
   return navigationHTML;
+}
+
+// Function to share article image
+function shareArticleImage(imageUrl, articleTitle) {
+  // Try Web Share API first (mobile devices)
+  if (navigator.share) {
+    navigator.share({
+      title: articleTitle,
+      text: `Check out this article: ${articleTitle}`,
+      url: window.location.href,
+    }).catch(err => {
+      console.log('Error sharing:', err);
+      // Fallback to opening image in new tab
+      window.open(imageUrl, '_blank');
+    });
+  } else {
+    // Fallback: Copy image URL to clipboard or open in new tab
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(imageUrl).then(() => {
+        alert('Image URL copied to clipboard! You can now paste it to share.');
+      }).catch(() => {
+        // If clipboard fails, open image in new tab
+        window.open(imageUrl, '_blank');
+      });
+    } else {
+      // Final fallback: open image in new tab
+      window.open(imageUrl, '_blank');
+    }
+  }
 }
 
 function renderArticleContent(body) {

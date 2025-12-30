@@ -136,6 +136,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               <h3 class="article-title">
                 <a href="#" onclick="navigateToArticle('${article.slug?.current || ''}'); return false;">${article.title}</a>
               </h3>
+              ${article.excerpt ? `<p class="article-excerpt">${article.excerpt}</p>` : ''}
               <div class="article-date">${formatDate(article.publishedAt)} • ${article.author?.name || 'HardYards Team'}</div>
             </div>
             <div class="article-image">
