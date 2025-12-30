@@ -93,17 +93,30 @@ async function loadCategoryArticles(subcategory = null) {
   const container = document.getElementById("category-articles");
   if (!container) return;
 
-  // Show loading placeholders immediately
+  // Show loading placeholders immediately (3-2-4 pattern)
   container.innerHTML = `
-    <div class="article-grid">
-      ${Array(6).fill().map(() => `
-        <article class="article-card">
-          <div class="article-image">
-            <div class="article-image-placeholder"></div>
-          </div>
+    <div class="category-row category-row-3">
+      ${Array(3).fill().map(() => `
+        <article class="article-card horizontal">
           <div class="article-content">
             <h3 class="article-title-placeholder"></h3>
             <div class="article-date-placeholder"></div>
+          </div>
+          <div class="article-image">
+            <div class="article-image-placeholder"></div>
+          </div>
+        </article>
+      `).join('')}
+    </div>
+    <div class="category-row category-row-2">
+      ${Array(2).fill().map(() => `
+        <article class="article-card horizontal">
+          <div class="article-content">
+            <h3 class="article-title-placeholder"></h3>
+            <div class="article-date-placeholder"></div>
+          </div>
+          <div class="article-image">
+            <div class="article-image-placeholder"></div>
           </div>
         </article>
       `).join('')}
