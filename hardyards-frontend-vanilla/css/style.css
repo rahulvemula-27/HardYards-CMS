@@ -84,9 +84,9 @@ html {
 
 /* Cover Story Section */
 .cover-story-section {
-  margin-bottom: 2rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .cover-story-title {
@@ -447,7 +447,9 @@ html {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
-  margin-bottom: 0;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 #featured-article {
@@ -597,13 +599,14 @@ html {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 0;
+  padding-top: 2rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid #e0e0e0;
 }
 
 .article-card {
-  background: #fff;
+  background: transparent;
   border-radius: 0;
   overflow: visible;
   box-shadow: none;
@@ -651,7 +654,7 @@ html {
 
 /* Vertical article card layout (for grid/latest articles) */
 .article-card:not(.horizontal) {
-  background: #fff;
+  background: transparent;
   border-radius: 0;
   overflow: hidden;
   box-shadow: none;

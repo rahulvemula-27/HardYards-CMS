@@ -192,7 +192,7 @@ async function loadArticle(slug) {
           ${article.mainImage ? `
             <div class="share-image-button-container">
               <button onclick="shareArticleImage('${article.mainImage.asset.url}', '${article.title.replace(/'/g, "\\'")}')" class="share-image-button">
-                📷 Share Article Image
+                Share Article
               </button>
             </div>
           ` : ''}
