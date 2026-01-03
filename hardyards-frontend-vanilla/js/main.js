@@ -94,26 +94,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Hide navbar1 when scrolling down, show when at top
+  // Hide navbar1 when scrolling, show only when at top
   const navbar1 = document.querySelector('.navbar1');
   if (navbar1) {
-    let lastScrollTop = 0;
-    
     window.addEventListener('scroll', () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       
       if (scrollTop === 0) {
         // At the top - show navbar1
         navbar1.classList.remove('hidden');
-      } else if (scrollTop > lastScrollTop && scrollTop > 50) {
-        // Scrolling down - hide navbar1
+      } else {
+        // Scrolled down - hide navbar1
         navbar1.classList.add('hidden');
-      } else if (scrollTop < lastScrollTop) {
-        // Scrolling up - show navbar1
-        navbar1.classList.remove('hidden');
       }
-      
-      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     });
+    
+    // Check initial scroll position
+    if (window.pageYOffset === 0) {
+      navbar1.classList.remove('hidden');
+    } else {
+      navbar1.classList.add('hidden');
+    }
   }
 });
