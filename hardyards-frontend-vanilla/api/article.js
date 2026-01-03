@@ -54,15 +54,18 @@ module.exports = async (req, res) => {
       articleImage = `${baseUrl}${articleImage}`;
     }
     
-    // For Sanity CDN images, add transformation parameters for optimal social sharing
+    // For Sanity CDN images, ensure optimal size for social sharing
     if (articleImage && articleImage.includes('cdn.sanity.io')) {
-      // Remove existing query params and add our own
-      const imageUrl = new URL(articleImage.split('?')[0]);
-      imageUrl.searchParams.set('w', '1200');
-      imageUrl.searchParams.set('h', '630');
-      imageUrl.searchParams.set('fit', 'crop');
-      imageUrl.searchParams.set('auto', 'format');
-      articleImage = imageUrl.toString();
+      // Sanity CDN URLs format: https://cdn.sanity.io/images/{projectId}/{dataset}/{imageId}-{width}x{height}.{format}?...
+      // Add transformation parameters if not already present
+      const url = new URL(articleImage);
+      if (!url.searchParams.has('w') || !url.searchParams.has('h')) {
+        url.searchParams.set('w', '1200');
+        url.searchParams.set('h', '630');
+        url.searchParams.set('fit', 'crop');
+        url.searchParams.set('auto', 'format');
+      }
+      articleImage = url.toString();
     }
     
     // Generate HTML with proper meta tags for social sharing
