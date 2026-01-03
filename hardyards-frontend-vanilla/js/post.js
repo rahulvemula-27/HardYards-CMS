@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("article-container").innerHTML = `
       <div class="error-message">
         <p>Article not found</p>
-        <a href="index.html" class="back-button">Return to Homepage</a>
+        <a href="/" class="back-button">Return to Homepage</a>
       </div>
     `;
   }
@@ -222,7 +222,7 @@ async function loadArticle(slug) {
     container.innerHTML = `
       <div class="error-message">
         <p>Error loading article: ${error.message}</p>
-        <a href="index.html" class="back-button">Return to Homepage</a>
+        <a href="/" class="back-button">Return to Homepage</a>
       </div>
     `;
   }

@@ -14,3 +14,4 @@ module.exports = async (req, res) => {
   return res.redirect(301, '/');
 };
 
+

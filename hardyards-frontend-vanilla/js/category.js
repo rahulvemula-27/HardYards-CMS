@@ -45,13 +45,14 @@ document.addEventListener("DOMContentLoaded", async () => {
    async function handleSubcategoryNavigation(href) {
      // Update URL without page reload
      let currentSub = null;
-     if (href === 'sports.html') {
-       window.history.pushState({}, '', 'sports.html');
+     if (href === '/sports' || href === 'sports.html') {
+       window.history.pushState({}, '', '/sports');
        await loadCategoryArticles(null);
      } else {
        const urlParams = new URLSearchParams(href.split('?')[1]);
        currentSub = urlParams.get('sub');
-       window.history.pushState({}, '', href);
+       const cleanHref = href.replace('.html', '');
+       window.history.pushState({}, '', cleanHref);
        await loadCategoryArticles(currentSub);
      }
      
@@ -67,14 +68,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     // Set active state for subcategory navigation
     if (currentSubcategory) {
-      const activeLink = document.querySelector(`.sports-subnav a[href="sports.html?sub=${currentSubcategory}"]`);
+      const activeLink = document.querySelector(`.sports-subnav a[href="/sports?sub=${currentSubcategory}"], .sports-subnav a[href="sports.html?sub=${currentSubcategory}"]`);
       if (activeLink) {
         activeLink.classList.add('active');
         console.log('Set active link for:', currentSubcategory);
       }
     } else {
       // Set "All" as active if no subcategory
-      const allLink = document.querySelector('.sports-subnav a[href="sports.html"]');
+      const allLink = document.querySelector('.sports-subnav a[href="/sports"], .sports-subnav a[href="sports.html"]');
       if (allLink) {
         allLink.classList.add('active');
         console.log('Set active link for: All');
@@ -182,7 +183,7 @@ async function loadCategoryArticles(subcategory = null) {
       container.innerHTML = `
         <div class="error-message">
           <p>No articles found for this ${subcategory ? `subcategory: ${subcategory}` : 'category'}.</p>
-          <a href="index.html">Return to homepage</a>
+          <a href="/">Return to homepage</a>
         </div>
       `;
       return;

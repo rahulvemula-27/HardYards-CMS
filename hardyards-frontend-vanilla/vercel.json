@@ -7,6 +7,26 @@
     {
       "source": "/post",
       "destination": "/api/article"
+    },
+    {
+      "source": "/sports",
+      "destination": "/sports.html"
+    },
+    {
+      "source": "/urban",
+      "destination": "/urban.html"
+    },
+    {
+      "source": "/rural",
+      "destination": "/rural.html"
+    },
+    {
+      "source": "/life",
+      "destination": "/life.html"
+    },
+    {
+      "source": "/",
+      "destination": "/index.html"
     }
   ],
   "headers": [
