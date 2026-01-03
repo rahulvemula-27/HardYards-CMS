@@ -47,10 +47,22 @@ module.exports = async (req, res) => {
     const articleUrl = `${baseUrl}/post/${encodeURIComponent(slug)}`;
     const articleTitle = escapeHtml(article.title || 'HardYards - Article');
     const articleDescription = escapeHtml(article.excerpt || article.title || 'Read the latest articles and stories from HardYards.');
-    // Ensure image URL is absolute and properly formatted
+    
+    // Ensure image URL is absolute and optimized for social sharing (1200x630 minimum recommended)
     let articleImage = article.mainImage?.asset?.url || `${baseUrl}/default-og-image.jpg`;
     if (articleImage && !articleImage.startsWith('http')) {
       articleImage = `${baseUrl}${articleImage}`;
+    }
+    
+    // For Sanity CDN images, add transformation parameters for optimal social sharing
+    if (articleImage && articleImage.includes('cdn.sanity.io')) {
+      // Remove existing query params and add our own
+      const imageUrl = new URL(articleImage.split('?')[0]);
+      imageUrl.searchParams.set('w', '1200');
+      imageUrl.searchParams.set('h', '630');
+      imageUrl.searchParams.set('fit', 'crop');
+      imageUrl.searchParams.set('auto', 'format');
+      articleImage = imageUrl.toString();
     }
     
     // Generate HTML with proper meta tags for social sharing
@@ -68,10 +80,16 @@ module.exports = async (req, res) => {
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="${articleUrl}"/>
   <meta property="og:image" content="${articleImage}"/>
+  <meta property="og:image:secure_url" content="${articleImage}"/>
+  <meta property="og:image:type" content="image/jpeg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:site_name" content="HardYards"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="${articleTitle}"/>
   <meta name="twitter:description" content="${articleDescription}"/>
   <meta name="twitter:image" content="${articleImage}"/>
+  <meta name="twitter:image:alt" content="${articleTitle}"/>
   <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
