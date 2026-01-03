@@ -1159,19 +1159,20 @@ footer {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border: none;
+  border: 1px solid #e0e0e0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s, box-shadow 0.2s;
-  background: #f5f5f5;
-  color: #333;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+  background: #ffffff;
+  color: #000000;
 }
 
 .share-button:hover {
   transform: scale(1.1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: #f5f5f5;
 }
 
 .share-button:active {
@@ -1183,25 +1184,26 @@ footer {
   height: 24px;
 }
 
-/* Twitter Button */
+/* Twitter/X Button */
 .share-twitter {
-  background: #1DA1F2;
-  color: white;
+  background: #ffffff;
+  color: #000000;
 }
 
 .share-twitter:hover {
-  background: #0d8bd9;
-  box-shadow: 0 4px 12px rgba(29, 161, 242, 0.4);
+  background: #f5f5f5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Instagram Button */
 .share-instagram {
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  color: white;
+  background: #ffffff;
+  color: #000000;
 }
 
 .share-instagram:hover {
-  box-shadow: 0 4px 12px rgba(188, 24, 136, 0.4);
+  background: #f5f5f5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Share Notification */

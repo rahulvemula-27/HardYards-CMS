@@ -198,9 +198,9 @@ async function loadArticle(slug) {
             <span class="article-author">• ${article.author?.name || 'HardYards Team'}</span>
           </div>
           <div class="share-buttons-container">
-            <button onclick="shareToTwitter('${article.title.replace(/'/g, "\\'")}', '${window.location.href}')" class="share-button share-twitter" title="Share on Twitter">
+            <button onclick="shareToTwitter('${article.title.replace(/'/g, "\\'")}', '${window.location.href}')" class="share-button share-twitter" title="Share on X">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
               </svg>
             </button>
             <button onclick="shareToInstagram('${article.title.replace(/'/g, "\\'")}', '${window.location.href}')" class="share-button share-instagram" title="Share on Instagram">
@@ -324,12 +324,12 @@ function createNavigationHTML(previousArticle, nextArticle) {
   return navigationHTML;
 }
 
-// Function to share article to Twitter
+// Function to share article to Twitter/X
 function shareToTwitter(articleTitle, articleUrl) {
   const encodedUrl = encodeURIComponent(articleUrl);
   const encodedText = encodeURIComponent(`Check out this article: ${articleTitle}`);
   const twitterUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
-  window.open(twitterUrl, '_blank', 'width=550,height=420');
+  window.location.href = twitterUrl;
 }
 
 // Function to share article to Instagram
@@ -351,12 +351,12 @@ function shareToInstagram(articleTitle, articleUrl) {
         }, 300);
       }, 3000);
     }).catch(() => {
-      // If clipboard fails, open Instagram in new tab
-      window.open('https://www.instagram.com', '_blank');
+      // If clipboard fails, open Instagram in same window
+      window.location.href = 'https://www.instagram.com';
     });
   } else {
-    // Fallback: open Instagram in new tab
-    window.open('https://www.instagram.com', '_blank');
+    // Fallback: open Instagram in same window
+    window.location.href = 'https://www.instagram.com';
   }
 }
 
