@@ -1009,10 +1009,16 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .logo {
-    position: static;
-    margin-right: auto;
-    margin-left: 1rem;
+  .navbar1 {
+    padding: 1rem;
+  }
+  
+  .logo-centered {
+    font-size: 1.75rem;
+  }
+  
+  .navbar2 {
+    padding: 1rem;
   }
   
   .nav-links {
