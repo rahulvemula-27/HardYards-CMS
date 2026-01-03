@@ -182,7 +182,7 @@ async function loadCategoryArticles(subcategory = null) {
     if (articles.length === 0) {
       container.innerHTML = `
         <div class="error-message">
-          <p>No articles found for this ${subcategory ? `subcategory: ${subcategory}` : 'category'}.</p>
+          <p>No articles on this topic yet</p>
           <a href="/">Return to homepage</a>
         </div>
       `;
