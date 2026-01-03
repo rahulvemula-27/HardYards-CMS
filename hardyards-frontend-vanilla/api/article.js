@@ -103,8 +103,8 @@ module.exports = async (req, res) => {
   <meta property="og:description" content="${articleDescription}"/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="${articleUrl}"/>
-  <meta property="og:image" content="${articleImage}"/>
-  <meta property="og:image:secure_url" content="${articleImage}"/>
+  <meta property="og:image" content="${escapeHtml(articleImage)}"/>
+  <meta property="og:image:secure_url" content="${escapeHtml(articleImage)}"/>
   <meta property="og:image:type" content="image/jpeg"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
@@ -112,7 +112,7 @@ module.exports = async (req, res) => {
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="${articleTitle}"/>
   <meta name="twitter:description" content="${articleDescription}"/>
-  <meta name="twitter:image" content="${articleImage}"/>
+  <meta name="twitter:image" content="${escapeHtml(articleImage)}"/>
   <meta name="twitter:image:alt" content="${articleTitle}"/>
   <link rel="stylesheet" href="/css/style.css"/>
 </head>
