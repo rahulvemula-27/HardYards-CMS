@@ -75,8 +75,10 @@ module.exports = async (req, res) => {
   <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-  <nav class="navbar">
-    <a href="/" class="logo"><span class="hard">Hard</span><span class="yards">Yards</span></a>
+  <nav class="navbar1">
+    <a href="/" class="logo-centered"><span class="hard">Hard</span><span class="yards">Yards</span></a>
+  </nav>
+  <nav class="navbar navbar2">
     <div class="nav-links">
       <a href="/sports">SPORTS</a>
       <a href="/urban">URBAN</a>

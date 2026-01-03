@@ -101,7 +101,38 @@ html {
 }
 
 /* ========== NAVIGATION STYLES ========== */
-.navbar {
+/* Navbar1 - Top navbar with centered logo (only visible at top) */
+.navbar1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  padding: 1.2rem 2rem;
+  z-index: 101;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  position: relative;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.navbar1.hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.logo-centered { 
+  font-size: 2rem; 
+  font-weight: 700; 
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo-centered .hard { color: var(--logo-hard); }
+.logo-centered .yards { color: var(--logo-yards); }
+
+/* Navbar2 - Sticky navigation bar (visible when scrolling) */
+.navbar2 {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,7 +140,8 @@ html {
   padding: 1.2rem 2rem;
   z-index: 100;
   box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-  position: relative;
+  position: sticky;
+  top: 0;
 }
 
 .logo { 

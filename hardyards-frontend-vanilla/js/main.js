@@ -93,4 +93,27 @@ document.addEventListener("DOMContentLoaded", () => {
       mobileMenu.classList.remove("active");
     });
   });
+
+  // Hide navbar1 when scrolling down, show when at top
+  const navbar1 = document.querySelector('.navbar1');
+  if (navbar1) {
+    let lastScrollTop = 0;
+    
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      if (scrollTop === 0) {
+        // At the top - show navbar1
+        navbar1.classList.remove('hidden');
+      } else if (scrollTop > lastScrollTop && scrollTop > 50) {
+        // Scrolling down - hide navbar1
+        navbar1.classList.add('hidden');
+      } else if (scrollTop < lastScrollTop) {
+        // Scrolling up - show navbar1
+        navbar1.classList.remove('hidden');
+      }
+      
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+  }
 });
