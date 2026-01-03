@@ -1145,32 +1145,103 @@ footer {
   margin-bottom: 0;
 }
 
-/* Share Image Button */
-.share-image-button-container {
+/* Share Buttons Container */
+.share-buttons-container {
+  display: flex;
+  gap: 1rem;
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px solid #e0e0e0;
 }
 
-.share-image-button {
+/* Circular Share Buttons */
+.share-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: #f5f5f5;
+  color: #333;
+}
+
+.share-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.share-button:active {
+  transform: scale(0.95);
+}
+
+.share-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Twitter Button */
+.share-twitter {
+  background: #1DA1F2;
+  color: white;
+}
+
+.share-twitter:hover {
+  background: #0d8bd9;
+  box-shadow: 0 4px 12px rgba(29, 161, 242, 0.4);
+}
+
+/* Instagram Button */
+.share-instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: white;
+}
+
+.share-instagram:hover {
+  box-shadow: 0 4px 12px rgba(188, 24, 136, 0.4);
+}
+
+/* Share Notification */
+.share-notification {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
   background: var(--logo-hard);
   color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
   font-size: 0.9375rem;
-  font-weight: 600;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  font-family: 'Segoe UI', sans-serif;
+  animation: slideIn 0.3s ease-out;
 }
 
-.share-image-button:hover {
-  background: #025a35;
+.share-notification.fade-out {
+  animation: fadeOut 0.3s ease-out forwards;
 }
 
-.share-image-button:active {
-  background: #014429;
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
 }
 
 .article-category {

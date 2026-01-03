@@ -197,13 +197,18 @@ async function loadArticle(slug) {
             </time>
             <span class="article-author">• ${article.author?.name || 'HardYards Team'}</span>
           </div>
-          ${article.mainImage ? `
-            <div class="share-image-button-container">
-              <button onclick="shareArticleImage('${article.mainImage.asset.url}', '${article.title.replace(/'/g, "\\'")}')" class="share-image-button">
-                Share Article
-              </button>
-            </div>
-          ` : ''}
+          <div class="share-buttons-container">
+            <button onclick="shareToTwitter('${article.title.replace(/'/g, "\\'")}', '${window.location.href}')" class="share-button share-twitter" title="Share on Twitter">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+              </svg>
+            </button>
+            <button onclick="shareToInstagram('${article.title.replace(/'/g, "\\'")}', '${window.location.href}')" class="share-button share-instagram" title="Share on Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </button>
+          </div>
         </div>
         <div class="article-content">
           ${article.excerpt ? `<p class="article-excerpt">${article.excerpt}</p>` : ''}
@@ -319,32 +324,39 @@ function createNavigationHTML(previousArticle, nextArticle) {
   return navigationHTML;
 }
 
-// Function to share article image
-function shareArticleImage(imageUrl, articleTitle) {
-  // Try Web Share API first (mobile devices)
-  if (navigator.share) {
-    navigator.share({
-      title: articleTitle,
-      text: `Check out this article: ${articleTitle}`,
-      url: window.location.href,
-    }).catch(err => {
-      console.log('Error sharing:', err);
-      // Fallback to opening image in new tab
-      window.open(imageUrl, '_blank');
+// Function to share article to Twitter
+function shareToTwitter(articleTitle, articleUrl) {
+  const encodedUrl = encodeURIComponent(articleUrl);
+  const encodedText = encodeURIComponent(`Check out this article: ${articleTitle}`);
+  const twitterUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
+  window.open(twitterUrl, '_blank', 'width=550,height=420');
+}
+
+// Function to share article to Instagram
+function shareToInstagram(articleTitle, articleUrl) {
+  // Instagram doesn't support URL-based sharing, so we'll copy the link to clipboard
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(articleUrl).then(() => {
+      // Show a temporary notification
+      const notification = document.createElement('div');
+      notification.className = 'share-notification';
+      notification.textContent = 'Link copied! Paste it in your Instagram post.';
+      document.body.appendChild(notification);
+      
+      // Remove notification after 3 seconds
+      setTimeout(() => {
+        notification.classList.add('fade-out');
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 300);
+      }, 3000);
+    }).catch(() => {
+      // If clipboard fails, open Instagram in new tab
+      window.open('https://www.instagram.com', '_blank');
     });
   } else {
-    // Fallback: Copy image URL to clipboard or open in new tab
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(imageUrl).then(() => {
-        alert('Image URL copied to clipboard! You can now paste it to share.');
-      }).catch(() => {
-        // If clipboard fails, open image in new tab
-        window.open(imageUrl, '_blank');
-      });
-    } else {
-      // Final fallback: open image in new tab
-      window.open(imageUrl, '_blank');
-    }
+    // Fallback: open Instagram in new tab
+    window.open('https://www.instagram.com', '_blank');
   }
 }
 
