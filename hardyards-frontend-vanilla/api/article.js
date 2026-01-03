@@ -73,22 +73,15 @@ module.exports = async (req, res) => {
   <meta name="twitter:description" content="${articleDescription}"/>
   <meta name="twitter:image" content="${articleImage}"/>
   <link rel="stylesheet" href="/css/style.css"/>
-  <script>
-    // Redirect to query parameter URL for client-side routing (backward compatibility)
-    // But we prefer clean URLs, so try clean URL first, fallback to query param
-    if (window.location.pathname !== '/post.html') {
-      window.location.href = '/post.html?slug=${encodeURIComponent(slug)}';
-    }
-  </script>
 </head>
 <body>
   <nav class="navbar">
-    <a href="/index.html" class="logo"><span class="hard">Hard</span><span class="yards">Yards</span></a>
+    <a href="/" class="logo"><span class="hard">Hard</span><span class="yards">Yards</span></a>
     <div class="nav-links">
-      <a href="/sports.html">SPORTS</a>
-      <a href="/urban.html">URBAN</a>
-      <a href="/rural.html">RURAL</a>
-      <a href="/life.html">LIFE</a>
+      <a href="/sports">SPORTS</a>
+      <a href="/urban">URBAN</a>
+      <a href="/rural">RURAL</a>
+      <a href="/life">LIFE</a>
     </div>
   </nav>
   <main class="container">
@@ -96,11 +89,11 @@ module.exports = async (req, res) => {
   </main>
   <footer>
     <div class="footer-links">
-      <a href="/index.html">Home</a>
-      <a href="/sports.html">Sports</a>
-      <a href="/urban.html">Urban</a>
-      <a href="/rural.html">Rural</a>
-      <a href="/life.html">Life</a>
+      <a href="/">Home</a>
+      <a href="/sports">Sports</a>
+      <a href="/urban">Urban</a>
+      <a href="/rural">Rural</a>
+      <a href="/life">Life</a>
     </div>
     <p>&copy; 2025 HardYards. All rights reserved.</p>
   </footer>
