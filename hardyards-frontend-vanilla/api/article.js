@@ -49,24 +49,45 @@ module.exports = async (req, res) => {
     const articleDescription = escapeHtml(article.excerpt || article.title || 'Read the latest articles and stories from HardYards.');
     
     // Ensure image URL is absolute and optimized for social sharing (1200x630 minimum recommended)
-    let articleImage = article.mainImage?.asset?.url || `${baseUrl}/default-og-image.jpg`;
-    if (articleImage && !articleImage.startsWith('http')) {
+    let articleImage = article.mainImage?.asset?.url || null;
+    
+    if (!articleImage) {
+      // No image available - use default or skip
+      articleImage = `${baseUrl}/default-og-image.jpg`;
+    } else if (!articleImage.startsWith('http')) {
+      // Relative URL - make absolute
       articleImage = `${baseUrl}${articleImage}`;
     }
     
-    // For Sanity CDN images, ensure optimal size for social sharing
+    // For Sanity CDN images, use Sanity's image URL builder for optimal social sharing
     if (articleImage && articleImage.includes('cdn.sanity.io')) {
-      // Sanity CDN URLs format: https://cdn.sanity.io/images/{projectId}/{dataset}/{imageId}-{width}x{height}.{format}?...
-      // Add transformation parameters if not already present
-      const url = new URL(articleImage);
-      if (!url.searchParams.has('w') || !url.searchParams.has('h')) {
-        url.searchParams.set('w', '1200');
-        url.searchParams.set('h', '630');
-        url.searchParams.set('fit', 'crop');
-        url.searchParams.set('auto', 'format');
+      try {
+        // Sanity CDN URLs can be transformed using query parameters
+        // Format: https://cdn.sanity.io/images/{projectId}/{dataset}/{imageId}-{width}x{height}.{format}
+        // We'll append transformation parameters
+        const urlObj = new URL(articleImage);
+        
+        // Remove existing size parameters and add optimal ones for social sharing
+        urlObj.searchParams.delete('w');
+        urlObj.searchParams.delete('h');
+        urlObj.searchParams.delete('fit');
+        urlObj.searchParams.delete('auto');
+        
+        // Add optimal parameters for social media (1200x630 is recommended for OG images)
+        urlObj.searchParams.set('w', '1200');
+        urlObj.searchParams.set('h', '630');
+        urlObj.searchParams.set('fit', 'crop');
+        urlObj.searchParams.set('auto', 'format');
+        
+        articleImage = urlObj.toString();
+      } catch (e) {
+        // If URL parsing fails, use the original URL
+        console.error('Error processing Sanity image URL:', e);
       }
-      articleImage = url.toString();
     }
+    
+    // Log the final image URL for debugging
+    console.log('Article image URL for social sharing:', articleImage);
     
     // Generate HTML with proper meta tags for social sharing
     const html = `<!DOCTYPE html>
