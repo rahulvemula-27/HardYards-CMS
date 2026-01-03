@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // More articles section - Show next 2 articles horizontally
-    const moreArticles = articles.slice(5, 7); // Show next 2 articles (articles 5-6)
+    const moreArticles = articles.slice(6, 8); // Show next 2 articles (articles 6-7)
     const moreArticlesContainer = document.getElementById("more-articles");
     if (moreArticlesContainer && moreArticles.length > 0) {
       const moreArticlesHTML = moreArticles.map(article => {
